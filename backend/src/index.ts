@@ -1,12 +1,13 @@
-import express, { urlencoded } from "express";
+import express from "express";
 import "dotenv/config";
 import { connection } from "./config/db";
+import router from "./routes";
 
 const app = express();
 
 const port = process.env.PORT;
 
-app.use(urlencoded({ extended: true }));
+app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 connection.connect((error) => {
@@ -16,6 +17,8 @@ connection.connect((error) => {
     console.log("\x1b[36m%s\x1b[0m", "Connected to Database");
   }
 });
+
+app.use("/", router);
 
 app.listen(port, () => {
   console.log(`Server running on http://localhost:${port}`);
