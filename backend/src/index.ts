@@ -1,6 +1,6 @@
 import express from "express";
 import "dotenv/config";
-import { connection } from "./config/db";
+import { db } from "./config/db";
 import router from "./routes";
 
 const app = express();
@@ -10,7 +10,7 @@ const port = process.env.PORT;
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-connection.connect((error) => {
+db.connect((error) => {
   if (error) {
     console.log("Error connecting to database", error.message);
   } else {
