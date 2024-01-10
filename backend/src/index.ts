@@ -1,11 +1,13 @@
-import express from "express";
+import express, { urlencoded } from "express";
 import "dotenv/config";
-import mysql from "mysql";
 import { connection } from "./config/db";
 
 const app = express();
 
 const port = process.env.PORT;
+
+app.use(urlencoded({ extended: true }));
+app.use(express.json());
 
 connection.connect((error) => {
   if (error) {
