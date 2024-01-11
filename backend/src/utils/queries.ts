@@ -1,4 +1,5 @@
 import { db } from "../config/db";
+import { hashPassword } from "../module/auth";
 
 export const checkExistingEmail: (
   email: string
@@ -38,16 +39,13 @@ export const insertUserDb: (
   username: string,
   email: string,
   password: string
-) => Promise<{ insertId: number }> = (
-  username: string,
-  email: string,
-  password: string
-) => {
-  return new Promise((resolve, reject) => {
+) => Promise<{ insertId: number }> = (username, email, password) => {
+  return new Promise(async (resolve, reject) => {
+    const hashedPassword = await hashPassword(password);
     db.query(
       `INSERT INTO users (username, email, password)
             VALUES (?,?,?)`,
-      [username, email, password],
+      [username, email, hashedPassword],
       (error, results) => {
         if (error) {
           reject(error);
