@@ -1,5 +1,9 @@
-import { Request, Response, ErrorRequestHandler } from "express";
-import { checkExistingUsername, checkExistingEmail } from "../utils/queries";
+import { Request, Response } from "express";
+import {
+  checkExistingUsername,
+  checkExistingEmail,
+  insertUserDb,
+} from "../utils/queries";
 
 const userController = {
   registerUser: async (req: Request, res: Response) => {
@@ -17,10 +21,12 @@ const userController = {
         return res.status(400).json({ message: "This username is taken" });
       }
 
-      res.json({ message: "success" });
+      const user = await insertUserDb(username, email, password);
+
+      return res.json({ message: "success", userId: user.insertId });
     } catch (error) {
-      console.log(error);
-      return;
+      console.log("Error registering user", error);
+      return res.status(500).json({ message: "Internal server error" });
     }
   },
 
