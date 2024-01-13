@@ -10,12 +10,17 @@ const userController = {
     const { username, email, password } = req.body;
 
     try {
+      if (!username || !email || !password) {
+        return res.status(400).json({ message: "Please fill all the fields" });
+      }
+
       const dbEmail = await checkExistingEmail(email);
       if (dbEmail.length > 0) {
         return res
           .status(400)
           .json({ message: "This email is already in use" });
       }
+      
       const dbUsername = await checkExistingUsername(username);
       if (dbUsername.length > 0) {
         return res.status(400).json({ message: "This username is taken" });
