@@ -4,6 +4,7 @@ import {
   checkExistingEmail,
   insertUserDb,
 } from "../utils/queries";
+import { generateJWT } from "../module/auth";
 
 const userController = {
   registerUser: async (req: Request, res: Response) => {
@@ -20,7 +21,7 @@ const userController = {
           .status(400)
           .json({ message: "This email is already in use" });
       }
-      
+
       const dbUsername = await checkExistingUsername(username);
       if (dbUsername.length > 0) {
         return res.status(400).json({ message: "This username is taken" });
@@ -28,7 +29,10 @@ const userController = {
 
       const user = await insertUserDb(username, email, password);
 
-      return res.json({ message: "success", userId: user.insertId });
+      return res.json({
+        message: "success",
+        data: { id: user.insertId, token: generateJWT(user.insertId) },
+      });
     } catch (error) {
       console.log("Error registering user", error);
       return res.status(500).json({ message: "Internal server error" });
