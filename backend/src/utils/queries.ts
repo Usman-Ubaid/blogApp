@@ -3,10 +3,10 @@ import { hashPassword } from "../module/auth";
 
 export const checkExistingEmail: (
   email: string
-) => Promise<{ email: string }[]> = (email) => {
+) => Promise<{ email: string, password: string }[]> = (email) => {
   return new Promise((resolve, reject) => {
     db.query(
-      `SELECT email FROM users WHERE email = ?`,
+      `SELECT email, password FROM users WHERE email = ?`,
       [email],
       (error, results) => {
         if (error) {

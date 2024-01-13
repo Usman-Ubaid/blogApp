@@ -4,7 +4,7 @@ import {
   checkExistingEmail,
   insertUserDb,
 } from "../utils/queries";
-import { generateJWT } from "../module/auth";
+import { comparePassword, generateJWT } from "../module/auth";
 
 const userController = {
   registerUser: async (req: Request, res: Response) => {
@@ -41,7 +41,19 @@ const userController = {
 
   loginUser: async (req: Request, res: Response) => {
     const { email, password } = req.body;
-    return res.status(200).json({ email, password });
+
+    const checkEmail = await checkExistingEmail(email);
+
+    if (checkEmail.length > 0) {
+      const { password: dbpassword } = checkEmail[0];
+      const checkPassword = await comparePassword(password, dbpassword);
+      if (checkPassword) {
+        return res.status(200).json({ message: "Success" });
+      }
+    } else {
+      return res.status(400).json({ message: "Email not found" });
+    }
+    return res.status(400).json({ message: "Invalid credentials" });
   },
 };
 
