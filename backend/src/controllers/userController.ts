@@ -42,13 +42,18 @@ const userController = {
   loginUser: async (req: Request, res: Response) => {
     const { email, password } = req.body;
 
-    const checkEmail = await checkExistingEmail(email);
+    const user = await checkExistingEmail(email);
 
-    if (checkEmail.length > 0) {
-      const { password: dbpassword } = checkEmail[0];
+    if (user.length > 0) {
+      const { id, username, email, password: dbpassword } = user[0];
       const checkPassword = await comparePassword(password, dbpassword);
       if (checkPassword) {
-        return res.status(200).json({ message: "Success" });
+        return res
+          .status(200)
+          .json({
+            message: "Success",
+            data: { id, username, email, token: generateJWT(id) },
+          });
       }
     } else {
       return res.status(400).json({ message: "Email not found" });
