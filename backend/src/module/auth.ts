@@ -1,5 +1,5 @@
 import bcrypt from "bcrypt";
-import jwt from "jsonwebtoken";
+import jwt, { JwtPayload } from "jsonwebtoken";
 
 const saltRounds = 10;
 
@@ -20,6 +20,6 @@ export const generateJWT = (id: number) => {
 export const verifyJWT = (token: string) => {
   if (process.env.JWT_SECRET) {
     const decode = jwt.verify(token, process.env.JWT_SECRET);
-    return decode;
+    return decode as JwtPayload;
   }
 };
