@@ -16,3 +16,10 @@ export const generateJWT = (id: number) => {
     return jwt.sign({ id }, process.env.JWT_SECRET);
   }
 };
+
+export const verifyJWT = (token: string) => {
+  if (process.env.JWT_SECRET) {
+    const decode = jwt.verify(token, process.env.JWT_SECRET);
+    return decode;
+  }
+};
