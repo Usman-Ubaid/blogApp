@@ -1,7 +1,10 @@
-import { ReactNode } from "react";
 import { Navigate, Outlet } from "react-router-dom";
 
-const protectedRoutes = ({ children }: { children: ReactNode }) => {
+type ProtectedRoutesProps = {
+  children?: React.ReactNode;
+};
+
+const ProtectedRoutes = ({ children }: ProtectedRoutesProps) => {
   const userToken = localStorage.getItem("auth-token");
   if (!userToken) {
     return <Navigate to="/login" />;
@@ -9,4 +12,4 @@ const protectedRoutes = ({ children }: { children: ReactNode }) => {
   return children ? children : <Outlet />;
 };
 
-export default protectedRoutes;
+export default ProtectedRoutes;

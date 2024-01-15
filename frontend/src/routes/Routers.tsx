@@ -1,6 +1,8 @@
 import { Route, Routes } from "react-router-dom";
 import Login from "../pages/Login";
 import Register from "../pages/Register";
+import ProtectedRoutes from "../privateRoutes/protectedRoutes";
+import Dashboard from "../pages/Dashboard";
 
 const Routers = () => {
   const routes = [
@@ -17,6 +19,9 @@ const Routers = () => {
   ];
   return (
     <Routes>
+      <Route element={<ProtectedRoutes />}>
+        <Route path="/" element={<Dashboard />} />
+      </Route>
       {routes.map((route) => (
         <Route key={route.id} path={route.path} element={route.element} />
       ))}
