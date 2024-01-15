@@ -1,5 +1,22 @@
+import { Link } from "react-router-dom";
+
 const Navbar = () => {
-  return <div>Navbar</div>;
+  const pageLinks = [
+    { id: 1, to: "/login", item: "Login" },
+    { id: 2, to: "/register", item: "Register" },
+  ];
+
+  return (
+    <div>
+      <ul>
+        {pageLinks.map((link) => (
+          <li key={link.id}>
+            <Link to={link.to}>{link.item}</Link>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
 };
 
 export default Navbar;
