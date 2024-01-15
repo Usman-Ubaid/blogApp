@@ -7,8 +7,8 @@ const Navbar = () => {
   ];
 
   return (
-    <div>
-      <ul>
+    <div className="navbar-wrapper">
+      <ul className="navbar-list">
         {pageLinks.map((link) => (
           <li key={link.id}>
             <Link to={link.to}>{link.item}</Link>

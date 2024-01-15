@@ -1,7 +1,7 @@
 import { Route, Routes } from "react-router-dom";
 import Login from "../pages/Login";
 import Register from "../pages/Register";
-import ProtectedRoutes from "../privateRoutes/protectedRoutes";
+import ProtectedRoutes from "../privateRoutes/ProtectedRoutes";
 import Dashboard from "../pages/Dashboard";
 
 const Routers = () => {
