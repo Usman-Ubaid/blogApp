@@ -1,5 +1,6 @@
 import express from "express";
 import "dotenv/config";
+import cors from "cors";
 import { db } from "./config/db";
 import router from "./routes";
 
@@ -9,6 +10,7 @@ const port = process.env.PORT;
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+app.use(cors());
 
 db.connect((error) => {
   if (error) {
