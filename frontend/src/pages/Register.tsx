@@ -2,7 +2,7 @@ import Layout from "../components/common/Layout";
 import { RegisterFormData } from "../types/form";
 import { useForm } from "../hooks/useForm";
 import Input from "../components/form/Input";
-import axios from "axios";
+import { registerApi } from "../services/api/Auth";
 
 const Register = () => {
   const { formData, handleInputChange } = useForm<RegisterFormData>({
@@ -13,16 +13,15 @@ const Register = () => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const res = await axios({
-      method: "post",
-      url: "http://localhost:3001/api/register",
-      headers: { "Content-Type": "application/json" },
-      data: JSON.stringify(formData),
-    });
-    if (res) {
-      console.log("okay");
+    try {
+      return await registerApi(formData).then(() =>
+        console.log("Successfully Registered")
+      );
+    } catch (error) {
+      console.log(error);
     }
   };
+
   return (
     <Layout>
       <div className="form-container">

@@ -1,8 +1,8 @@
-import axios from "axios";
 import Layout from "../components/common/Layout";
 import Input from "../components/form/Input";
 import { useForm } from "../hooks/useForm";
 import { LoginFormData } from "../types/form";
+import { loginApi } from "../services/api/Auth";
 
 const Login = () => {
   const { formData, handleInputChange } = useForm<LoginFormData>({
@@ -12,14 +12,12 @@ const Login = () => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const res = await axios({
-      method: "post",
-      url: "http://localhost:3001/api/login",
-      headers: { "Content-Type": "application/json" },
-      data: formData,
-    });
-    if (res) {
-      console.log("okay");
+    try {
+      return await loginApi(formData).then(() => {
+        console.log("Successfully Signed in");
+      });
+    } catch (error) {
+      console.log(error);
     }
   };
 
