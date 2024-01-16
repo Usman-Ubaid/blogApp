@@ -1,27 +1,22 @@
-type Field = {
-  name: string;
-  type?: string;
-  placeholder?: string;
-};
-
 type InputProps = {
-  fields: Field[];
+  placeholder: string;
+  name: string;
+  id: string;
+  value: string;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
-const Input = ({ fields }: InputProps) => {
+const Input = ({ name, id, onChange, value, placeholder }: InputProps) => {
   return (
-    <>
-      {fields &&
-        fields.map((field) => (
-          <input
-            key={field.name}
-            type={field.type || "text"}
-            id={field.name}
-            name={field.name}
-            placeholder={field.placeholder}
-          />
-        ))}
-    </>
+    <input
+      type="text"
+      name={name}
+      id={id}
+      placeholder={placeholder}
+      onChange={onChange}
+      value={value}
+      required
+    />
   );
 };
 
