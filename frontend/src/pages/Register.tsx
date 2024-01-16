@@ -2,14 +2,26 @@ import Layout from "../components/common/Layout";
 import { RegisterFormData } from "../types/form";
 import { useForm } from "../hooks/useForm";
 import Input from "../components/form/Input";
+import axios from "axios";
 
 const Register = () => {
-  const { formData, handleInputChange, setFormData } =
-    useForm<RegisterFormData>({ username: "", email: "", password: "" });
+  const { formData, handleInputChange } = useForm<RegisterFormData>({
+    username: "",
+    email: "",
+    password: "",
+  });
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log("olamba");
+    const res = await axios({
+      method: "post",
+      url: "http://localhost:3001/api/register",
+      headers: { "Content-Type": "application/json" },
+      data: JSON.stringify(formData),
+    });
+    if (res) {
+      console.log("okay");
+    }
   };
   return (
     <Layout>
