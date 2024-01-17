@@ -25,7 +25,7 @@ export const checkExistingUsername: (
 ) => Promise<{ username: string }[]> = (username) => {
   return new Promise((resolve, reject) => {
     db.query(
-      `SELECT username FROM users WHERE email = ?`,
+      `SELECT username FROM users WHERE username = ?`,
       [username],
       (error, results) => {
         if (error) {
@@ -52,7 +52,7 @@ export const insertUserDb: (
         if (error) {
           reject(error);
         }
-        resolve({ insertId: results.insertId });
+        resolve({ insertId: results?.insertId });
       }
     );
   });
