@@ -3,6 +3,8 @@ import { RegisterFormData } from "../types/form";
 import { useForm } from "../hooks/useForm";
 import Input from "../components/form/Input";
 import { registerApi } from "../services/api/Auth";
+import axios from "axios";
+import { handleRegisterError } from "../utils/handleAuthErrors";
 
 const Register = () => {
   const { formData, handleInputChange } = useForm<RegisterFormData>({
@@ -18,7 +20,18 @@ const Register = () => {
         console.log("Successfully Registered")
       );
     } catch (error) {
-      console.log(error);
+      if (axios.isAxiosError(error)) {
+        const { response } = error;
+
+        if (response?.status) {
+          const {
+            data: { error: errorMessage },
+            status,
+          } = response;
+          const err = handleRegisterError(status, errorMessage);
+          console.log(err);
+        }
+      }
     }
   };
 
