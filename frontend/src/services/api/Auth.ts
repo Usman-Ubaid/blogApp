@@ -5,6 +5,6 @@ export const registerApi = (formData: RegisterFormData) => {
   return axiosInstance.post("/register", formData);
 };
 
-export const loginApi = (formData: LoginFormData) => {
-  return axiosInstance.post("/login", formData);
+export const loginApi = async (formData: LoginFormData) => {
+  return await axiosInstance.post("/login", formData);
 };
