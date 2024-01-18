@@ -64,6 +64,13 @@ ul {
   box-shadow: 10px 10px 5px #cccccca7, 10px 10px 5px #cccccca7;
 }
 
+.form-wrapper .error-msg {
+  color: red;
+  background-color: rgba(255, 0, 0, 0.3);
+  padding: 6px 6px;
+  border-radius: 8px;
+}
+
 .form-wrapper h2 {
   font-size: 2.5rem;
   margin-bottom: 3rem;

@@ -5,6 +5,8 @@ import Input from "../components/form/Input";
 import { registerApi } from "../services/api/Auth";
 import axios from "axios";
 import { handleRegisterError } from "../utils/handleAuthErrors";
+import { useRef } from "react";
+import { useError } from "../hooks/ErrorContext";
 
 const Register = () => {
   const { formData, handleInputChange } = useForm<RegisterFormData>({
@@ -12,6 +14,8 @@ const Register = () => {
     email: "",
     password: "",
   });
+  const errRef = useRef<null | HTMLParagraphElement>(null);
+  const { errorMsg, setErrorMsg } = useError();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -23,12 +27,24 @@ const Register = () => {
       if (axios.isAxiosError(error)) {
         const { response } = error;
 
+        if (errRef.current) {
+          errRef.current.style.display = "block";
+        }
+
         if (response?.status) {
           const {
             data: { error: errorMessage },
             status,
           } = response;
           const err = handleRegisterError(status, errorMessage);
+          setErrorMsg(err);
+
+          setTimeout(() => {
+            setErrorMsg("");
+            if (errRef.current) {
+              errRef.current.style.display = "none";
+            }
+          }, 3000);
           console.log(err);
         }
       }
@@ -39,6 +55,13 @@ const Register = () => {
     <Layout>
       <div className="form-container">
         <div className="form-wrapper">
+          <p
+            ref={errRef}
+            className={errorMsg ? "error-msg" : "offscreen"}
+            style={{ color: "red", display: "none", marginTop: "10px" }}
+          >
+            {errorMsg}
+          </p>
           <h2>Register</h2>
           <form onSubmit={handleSubmit}>
             <Input
