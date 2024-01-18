@@ -2,14 +2,14 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
 import App from "./App.tsx";
-import {ErrorProvider} from "./hooks/ErrorContext.tsx";
+import { MessageProvider } from "./hooks/MessageContext.tsx";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
-    <ErrorProvider>
+    <MessageProvider>
       <BrowserRouter>
         <App />
       </BrowserRouter>
-    </ErrorProvider>
+    </MessageProvider>
   </React.StrictMode>
 );
