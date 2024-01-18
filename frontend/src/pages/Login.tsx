@@ -5,15 +5,14 @@ import { useForm } from "../hooks/useForm";
 import { LoginFormData } from "../types/form";
 import { loginApi } from "../services/api/Auth";
 import { handleLoginError } from "../utils/handleAuthErrors";
-import { useError } from "../hooks/ErrorContext";
+import { useMessage } from "../hooks/MessageContext";
 
 const Login = () => {
   const { formData, handleInputChange } = useForm<LoginFormData>({
     email: "",
     password: "",
   });
-  const { errorMsg, setErrorMsg } = useError();
-  const { successMsg, setSuccessMsg } = useError();
+  const { errorMsg, setErrorMsg, successMsg, setSuccessMsg } = useMessage();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();

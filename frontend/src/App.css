@@ -71,6 +71,13 @@ ul {
   border-radius: 8px;
 }
 
+.form-wrapper .success-msg {
+  color: rgb(0, 101, 0);
+  background-color: rgba(0, 128, 0, 0.3);
+  padding: 6px 6px;
+  border-radius: 8px;
+}
+
 .form-wrapper h2 {
   font-size: 2.5rem;
   margin-bottom: 3rem;

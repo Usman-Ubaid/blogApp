@@ -31,6 +31,6 @@ export const MessageProvider = ({
   );
 };
 
-export const useError = () => {
+export const useMessage = () => {
   return useContext(MessageContext);
 };
