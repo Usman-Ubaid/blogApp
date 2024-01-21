@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { getAllBlogs, insertBlog } from "../utils/blogQueries";
+import { getAllBlogs, getBlogById, insertBlog } from "../utils/blogQueries";
 
 const blogController = {
   createBlog: async (req: Request, res: Response) => {
@@ -28,6 +28,18 @@ const blogController = {
       const allBlogs = await getAllBlogs();
       if (allBlogs && allBlogs.length > 0) {
         return res.status(200).json({ message: "success", blogs: allBlogs });
+      }
+    } catch (error) {
+      console.log(error);
+      return res.status(500).json({ error: "Internal server error" });
+    }
+  },
+  getBlogById: async (req: Request, res: Response) => {
+    const { id } = req.params;
+    try {
+      const blog = await getBlogById(id);
+      if (blog) {
+        return res.status(200).json({ message: "success", blog });
       }
     } catch (error) {
       console.log(error);
