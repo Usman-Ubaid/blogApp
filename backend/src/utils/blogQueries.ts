@@ -26,13 +26,7 @@ export const insertBlog: (
   });
 };
 
-export const getAllBlogs: () => Promise<
-  {
-    id: number;
-    heading: string;
-    body: string;
-  }[]
-> = () => {
+export const dbBlogs: () => Promise<Blog[]> = () => {
   return new Promise((resolve, reject) => {
     db.query("SELECT * FROM blogs", (error, results) => {
       if (error) {
@@ -43,13 +37,32 @@ export const getAllBlogs: () => Promise<
   });
 };
 
-export const getBlogById: (id: string) => Promise<Blog[]> = (id) => {
+export const dbBlogById: (id: string) => Promise<Blog[]> = (id) => {
   return new Promise((resolve, reject) => {
-    db.query("SELECT * FROM blogs WHERE id = ?", [id], (error, results) => {
+    db.query("SELECT * FROM blogs WHERE id = ${?}", [id], (error, results) => {
       if (error) {
         reject(error);
       }
       resolve(results);
     });
+  });
+};
+
+export const editBlogQuery: (
+  id: string,
+  heading: string,
+  body: string
+) => Promise<number> = (id, heading, body) => {
+  return new Promise((resolve, reject) => {
+    db.query(
+      "UPDATE blogs SET heading=?, body=? WHERE id=?",
+      [heading, body, id],
+      (error, results) => {
+        if (error) {
+          reject({ message: "Error updating blog", error });
+        }
+        resolve(results?.affectedRows);
+      }
+    );
   });
 };
