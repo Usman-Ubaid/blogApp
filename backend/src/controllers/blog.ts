@@ -1,5 +1,10 @@
 import { Request, Response } from "express";
-import { getAllBlogs, getBlogById, insertBlog } from "../utils/blogQueries";
+import {
+  dbBlogs,
+  dbBlogById,
+  insertBlog,
+  editBlogQuery,
+} from "../utils/blogQueries";
 
 const blogController = {
   createBlog: async (req: Request, res: Response) => {
@@ -25,7 +30,7 @@ const blogController = {
   },
   getAllBlogs: async (req: Request, res: Response) => {
     try {
-      const allBlogs = await getAllBlogs();
+      const allBlogs = await dbBlogs();
       if (allBlogs && allBlogs.length > 0) {
         return res.status(200).json({ message: "success", blogs: allBlogs });
       }
@@ -37,12 +42,36 @@ const blogController = {
   getBlogById: async (req: Request, res: Response) => {
     const { id } = req.params;
     try {
-      const blog = await getBlogById(id);
-      if (blog) {
+      const blog = await dbBlogById(id);
+      if (blog && blog.length > 0) {
         return res.status(200).json({ message: "success", blog });
+      } else {
+        return res.status(200).json({ error: "Blog not found" });
       }
     } catch (error) {
       console.log(error);
+      return res.status(500).json({ error: "Internal server error" });
+    }
+  },
+  editBlog: async (req: Request, res: Response) => {
+    const { id } = req.params;
+    const { heading, body } = req.body;
+    try {
+      const blog = await dbBlogById(id);
+      if (blog && blog.length > 0) {
+        const updatedBlog = await editBlogQuery(
+          id,
+          heading || blog[0].heading,
+          body || blog[0].body
+        );
+
+        if (updatedBlog === 1) {
+          return res.status(200).json({ message: "success" });
+        }
+      } else {
+        return res.status(400).json({ error: "No blog found" });
+      }
+    } catch (error) {
       return res.status(500).json({ error: "Internal server error" });
     }
   },
