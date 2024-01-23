@@ -2,7 +2,7 @@ import { Route, Routes } from "react-router-dom";
 import Login from "../pages/Login";
 import Register from "../pages/Register";
 import ProtectedRoutes from "../privateRoutes/ProtectedRoutes";
-import Dashboard from "../pages/Dashboard";
+import WriteBlog from "../pages/WriteBlog";
 
 const Routers = () => {
   const routes = [
@@ -20,7 +20,7 @@ const Routers = () => {
   return (
     <Routes>
       <Route element={<ProtectedRoutes />}>
-        <Route path="/" element={<Dashboard />} />
+        <Route path="/writeBlog" element={<WriteBlog />} />
       </Route>
       {routes.map((route) => (
         <Route key={route.id} path={route.path} element={route.element} />

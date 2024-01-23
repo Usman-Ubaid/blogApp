@@ -8,3 +8,8 @@ export type LoginFormData = {
   email: string;
   password: string;
 };
+
+export type WriteBlogData = {
+  title: string;
+  content: string;
+};
