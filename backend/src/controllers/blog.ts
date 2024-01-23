@@ -4,6 +4,7 @@ import {
   dbBlogById,
   insertBlog,
   editBlogQuery,
+  deleteBlogQuery,
 } from "../utils/blogQueries";
 
 const blogController = {
@@ -71,6 +72,22 @@ const blogController = {
       } else {
         return res.status(400).json({ error: "No blog found" });
       }
+    } catch (error) {
+      return res.status(500).json({ error: "Internal server error" });
+    }
+  },
+  deleteBlog: async (req: Request, res: Response) => {
+    const { id } = req.params;
+
+    try {
+      const blog = await dbBlogById(id);
+      if (blog && blog.length > 0) {
+        const removeBlog = await deleteBlogQuery(id);
+        if (removeBlog === 1) {
+          return res.status(200).json({ message: "success " });
+        }
+      }
+      return res.status(400).json({ error: "Blog not found" });
     } catch (error) {
       return res.status(500).json({ error: "Internal server error" });
     }

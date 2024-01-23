@@ -39,7 +39,7 @@ export const dbBlogs: () => Promise<Blog[]> = () => {
 
 export const dbBlogById: (id: string) => Promise<Blog[]> = (id) => {
   return new Promise((resolve, reject) => {
-    db.query("SELECT * FROM blogs WHERE id = ${?}", [id], (error, results) => {
+    db.query("SELECT * FROM blogs WHERE id = ?", [id], (error, results) => {
       if (error) {
         reject(error);
       }
@@ -64,5 +64,16 @@ export const editBlogQuery: (
         resolve(results?.affectedRows);
       }
     );
+  });
+};
+
+export const deleteBlogQuery: (id: string) => Promise<number> = (id) => {
+  return new Promise((resolve, reject) => {
+    db.query("DELETE FROM blogs where id = ?", [id], (error, results) => {
+      if (error) {
+        reject({ message: "Error deleting the blog", error });
+      }
+      resolve(results?.affectedRows);
+    });
   });
 };
