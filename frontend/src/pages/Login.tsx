@@ -1,4 +1,5 @@
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import Layout from "../components/common/Layout";
 import Input from "../components/form/Input";
 import { useForm } from "../hooks/useForm";
@@ -13,6 +14,7 @@ const Login = () => {
     email: "",
     password: "",
   });
+  const navigate = useNavigate();
   const { errorMsg, setErrorMsg, successMsg, setSuccessMsg } = useMessage();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -25,6 +27,7 @@ const Login = () => {
         setTimeout(() => {
           setSuccessMsg("");
         }, 3000);
+        navigate("writeBlog");
       });
     } catch (error) {
       if (axios.isAxiosError(error) && error.response) {
