@@ -6,6 +6,7 @@ import { LoginFormData } from "../types/form";
 import { loginApi } from "../services/api/Auth";
 import { handleLoginError } from "../utils/handleAuthErrors";
 import { useMessage } from "../hooks/MessageContext";
+import { saveAuthToken } from "../utils/tokenStorage";
 
 const Login = () => {
   const { formData, handleInputChange } = useForm<LoginFormData>({
@@ -17,7 +18,9 @@ const Login = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      return await loginApi(formData).then(() => {
+      return await loginApi(formData).then((res) => {
+        const token = res.data?.data?.token;
+        saveAuthToken(token);
         setSuccessMsg("Successfully logged in");
         setTimeout(() => {
           setSuccessMsg("");
