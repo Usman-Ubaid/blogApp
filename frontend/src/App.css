@@ -31,7 +31,7 @@ ul {
 /* Navbar */
 
 .navbar-wrapper {
-  margin: 2rem 0;
+  margin: 2rem 0 1rem 0;
 }
 
 .navbar-wrapper .navbar-list {
@@ -45,7 +45,7 @@ ul {
   font-size: 22px;
 }
 
-/* Form */
+/* Login & Register Form */
 
 .form-container {
   display: flex;
@@ -171,4 +171,43 @@ ul {
     font-size: 16px;
     width: 230px;
   }
+}
+
+/* Write Blog Form  */
+
+.blog-post-wrapper {
+  margin: 0 20%;
+}
+
+.blog-post-wrapper h1 {
+  margin-bottom: 20px;
+}
+
+.blog-form-wrapper {
+  width: 700px;
+  background-color: rgba(255, 255, 255, 0.5);
+  border: #ccc 1px solid;
+  border-radius: 5px;
+  padding: 20px;
+}
+
+.blog-form-wrapper form label,
+input,
+textarea {
+  width: 100%;
+  display: block;
+  margin-bottom: 10px;
+}
+
+.blog-form-wrapper form input,
+textarea {
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  padding: 5px 8px;
+  font-size: 20px;
+}
+
+.blog-form-wrapper form .blog-content textarea {
+  height: 300px;
+  resize: none;
 }
