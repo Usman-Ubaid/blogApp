@@ -23,3 +23,16 @@ export const handleRegisterError = (status: number, errMsg: string) => {
   }
   return message;
 };
+
+export const handlePostBlogApiError = (status: number) => {
+  let message = "";
+  if (status === 400) {
+    message = "Please fill all the fields";
+  } else if (status === 500) {
+    message = "Server error";
+  } else {
+    message = "Failed to post blog";
+  }
+
+  return message;
+};
