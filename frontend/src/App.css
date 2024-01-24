@@ -215,7 +215,7 @@ textarea {
   font-size: 20px;
 }
 
-.blog-form-wrapper form .blog-content textarea {
-  height: 300px;
+.blog-form-wrapper .blog-content textarea {
+  height: 250px;
   resize: none;
 }

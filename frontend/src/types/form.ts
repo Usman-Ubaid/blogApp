@@ -9,7 +9,7 @@ export type LoginFormData = {
   password: string;
 };
 
-export type WriteBlogData = {
+export type BlogData = {
   title: string;
   content: string;
 };
