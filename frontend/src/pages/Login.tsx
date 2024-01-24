@@ -5,7 +5,7 @@ import Input from "../components/form/Input";
 import { useForm } from "../hooks/useForm";
 import { LoginFormData } from "../types/form";
 import { loginApi } from "../services/api/Auth";
-import { handleLoginError } from "../utils/handleAuthErrors";
+import { handleLoginError } from "../utils/handleAxiosErrors";
 import { useMessage } from "../hooks/MessageContext";
 import { saveAuthToken } from "../utils/tokenStorage";
 

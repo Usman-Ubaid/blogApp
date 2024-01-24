@@ -4,7 +4,7 @@ import { useForm } from "../hooks/useForm";
 import Input from "../components/form/Input";
 import { registerApi } from "../services/api/Auth";
 import axios from "axios";
-import { handleRegisterError } from "../utils/handleAuthErrors";
+import { handleRegisterError } from "../utils/handleAxiosErrors";
 import { useMessage } from "../hooks/MessageContext";
 
 const Register = () => {

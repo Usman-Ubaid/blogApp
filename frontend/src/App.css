@@ -45,6 +45,22 @@ ul {
   color: #000;
 }
 
+.error-msg {
+  color: red;
+  background-color: rgba(255, 0, 0, 0.3);
+  padding: 6px 6px;
+  border-radius: 8px;
+  margin-bottom: 8px;
+}
+
+.success-msg {
+  color: rgb(0, 101, 0);
+  background-color: rgba(0, 128, 0, 0.3);
+  padding: 6px 6px;
+  border-radius: 8px;
+  margin-bottom: 8px;
+}
+
 /* Navbar */
 
 .navbar-wrapper {
@@ -82,20 +98,6 @@ ul {
   padding: 15px 15px;
   border-radius: 5px;
   box-shadow: 10px 10px 5px #cccccca7, 10px 10px 5px #cccccca7;
-}
-
-.form-wrapper .error-msg {
-  color: red;
-  background-color: rgba(255, 0, 0, 0.3);
-  padding: 6px 6px;
-  border-radius: 8px;
-}
-
-.form-wrapper .success-msg {
-  color: rgb(0, 101, 0);
-  background-color: rgba(0, 128, 0, 0.3);
-  padding: 6px 6px;
-  border-radius: 8px;
 }
 
 .form-wrapper h2 {
