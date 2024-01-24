@@ -27,7 +27,7 @@ const Login = () => {
         setTimeout(() => {
           setSuccessMsg("");
         }, 3000);
-        navigate("writeBlog");
+        navigate("/");
       });
     } catch (error) {
       if (axios.isAxiosError(error) && error.response) {

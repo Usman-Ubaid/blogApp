@@ -8,6 +8,9 @@ const Navbar = () => {
 
   return (
     <div className="navbar-wrapper">
+      <h1>
+        <Link to="/">Dashboard</Link>
+      </h1>
       <ul className="navbar-list">
         {pageLinks.map((link) => (
           <li key={link.id}>
