@@ -28,10 +28,30 @@ ul {
   list-style-type: none;
 }
 
+.btn {
+  margin-top: 2rem;
+  width: 220px;
+  padding: 8px 5px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 20px;
+  color: rgba(0, 0, 0, 0.7);
+  transition: all 0.3s;
+}
+
+.btn:hover {
+  cursor: pointer;
+  background-color: #cccccca7;
+  color: #000;
+}
+
 /* Navbar */
 
 .navbar-wrapper {
-  margin: 2rem 0 1rem 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 2rem 0 2rem 0;
 }
 
 .navbar-wrapper .navbar-list {
@@ -103,18 +123,6 @@ ul {
   display: block;
   margin: 3rem auto;
   width: 270px;
-  padding: 8px 5px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  font-size: 20px;
-  color: rgba(0, 0, 0, 0.7);
-  transition: all 0.3s;
-}
-
-.form-wrapper .btn:hover {
-  cursor: pointer;
-  background-color: #cccccca7;
-  color: #000;
 }
 
 @media (max-width: 768px) {
