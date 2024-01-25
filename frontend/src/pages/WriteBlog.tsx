@@ -6,6 +6,7 @@ import { useForm } from "../hooks/useForm";
 import { postBlog } from "../services/api/blogApi";
 import { BlogData } from "../types/form";
 import { handlePostBlogApiError } from "../utils/handleAxiosErrors";
+import useMessageHandling from "../hooks/useMessageHandling";
 
 const WriteBlog = () => {
   const { formData, handleInputChange } = useForm<BlogData>({
@@ -19,20 +20,17 @@ const WriteBlog = () => {
     try {
       const res = await postBlog(formData);
       setSuccessMsg("Blog posted successfully");
-      setTimeout(() => {
-        setSuccessMsg("");
-      }, 3000);
       console.log(res.statusText);
     } catch (error) {
       if (axios.isAxiosError(error) && error.response) {
         const err = handlePostBlogApiError(error.response.status);
         setErrorMsg(err);
-        setTimeout(() => {
-          setErrorMsg("");
-        }, 3000);
       }
     }
   };
+
+  // Reset messages when the component unmounts or when errorMsg/successMsg change
+  useMessageHandling({ setErrorMsg, setSuccessMsg });
 
   return (
     <Layout>
