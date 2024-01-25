@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 
 type MessageContextType = {
   errorMsg: string;
@@ -21,6 +21,15 @@ export const MessageProvider = ({
 }) => {
   const [errorMsg, setErrorMsg] = useState("");
   const [successMsg, setSuccessMsg] = useState("");
+
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      setErrorMsg("");
+      setSuccessMsg("");
+    }, 3000);
+
+    return () => clearTimeout(timeoutId);
+  }, [errorMsg, successMsg]);
 
   return (
     <MessageContext.Provider
