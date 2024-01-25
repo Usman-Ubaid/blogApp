@@ -1,10 +1,21 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Navbar = () => {
-  const pageLinks = [
-    { id: 1, to: "/login", item: "Login" },
-    { id: 2, to: "/register", item: "Register" },
-  ];
+  const navigate = useNavigate();
+  const token = localStorage.getItem("auth-token");
+
+  const handleLogout = () => {
+    localStorage.removeItem("auth-token");
+    navigate("/login");
+  };
+
+  const loginLogoutLink = token ? (
+    <button className="btn logout-btn" onClick={handleLogout}>
+      Logout
+    </button>
+  ) : (
+    <Link to="/login">Login</Link>
+  );
 
   return (
     <div className="navbar-wrapper">
@@ -12,11 +23,10 @@ const Navbar = () => {
         <Link to="/">Dashboard</Link>
       </h1>
       <ul className="navbar-list">
-        {pageLinks.map((link) => (
-          <li key={link.id}>
-            <Link to={link.to}>{link.item}</Link>
-          </li>
-        ))}
+        <li>{loginLogoutLink}</li>
+        <li>
+          <Link to="/register">Register</Link>
+        </li>
       </ul>
     </div>
   );

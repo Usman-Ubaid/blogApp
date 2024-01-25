@@ -81,6 +81,10 @@ ul {
   font-size: 22px;
 }
 
+.navbar-wrapper .logout-btn {
+  margin-top: 5px;
+  width: 150px;
+}
 /* Login & Register Form */
 
 .form-container {
