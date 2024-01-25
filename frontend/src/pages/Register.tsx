@@ -6,6 +6,7 @@ import { registerApi } from "../services/api/Auth";
 import axios from "axios";
 import { handleRegisterError } from "../utils/handleAxiosErrors";
 import { useMessage } from "../hooks/MessageContext";
+import useMessageHandling from "../hooks/useMessageHandling";
 
 const Register = () => {
   const { formData, handleInputChange } = useForm<RegisterFormData>({
@@ -20,9 +21,6 @@ const Register = () => {
     try {
       return await registerApi(formData).then(() => {
         setSuccessMsg("Successfully Registered");
-        setTimeout(() => {
-          setSuccessMsg("");
-        }, 3000);
       });
     } catch (error) {
       if (axios.isAxiosError(error)) {
@@ -36,14 +34,14 @@ const Register = () => {
           const err = handleRegisterError(status, errorMessage);
           setErrorMsg(err);
 
-          setTimeout(() => {
-            setErrorMsg("");
-          }, 3000);
           console.log(err);
         }
       }
     }
   };
+
+  // Reset messages when the component unmounts or when errorMsg/successMsg change
+  useMessageHandling({ setErrorMsg, setSuccessMsg });
 
   return (
     <Layout>

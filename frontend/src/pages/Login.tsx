@@ -8,6 +8,7 @@ import { loginApi } from "../services/api/Auth";
 import { handleLoginError } from "../utils/handleAxiosErrors";
 import { useMessage } from "../hooks/MessageContext";
 import { saveAuthToken } from "../utils/tokenStorage";
+import useMessageHandling from "../hooks/useMessageHandling";
 
 const Login = () => {
   const { formData, handleInputChange } = useForm<LoginFormData>({
@@ -24,22 +25,19 @@ const Login = () => {
         const token = res.data?.data?.token;
         saveAuthToken(token);
         setSuccessMsg("Successfully logged in");
-        setTimeout(() => {
-          setSuccessMsg("");
-        }, 3000);
+
         navigate("/");
       });
     } catch (error) {
       if (axios.isAxiosError(error) && error.response) {
         const err = handleLoginError(error.response?.status);
         setErrorMsg(err);
-
-        setTimeout(() => {
-          setErrorMsg("");
-        }, 3000);
       }
     }
   };
+
+  // Reset messages when the component unmounts or when errorMsg/successMsg change
+  useMessageHandling({ setErrorMsg, setSuccessMsg });
 
   return (
     <Layout>
