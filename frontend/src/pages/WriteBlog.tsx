@@ -35,7 +35,7 @@ const WriteBlog = () => {
   return (
     <Layout>
       <div className="blog-post-wrapper">
-        <h1>Create Post</h1>
+        <h1>Create Blog</h1>
         <div className="blog-form-wrapper">
           {errorMsg && <p className="error-msg">{errorMsg}</p>}
           {successMsg && <p className="success-msg">{successMsg}</p>}
