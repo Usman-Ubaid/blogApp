@@ -1,6 +1,5 @@
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import Layout from "../components/common/Layout";
 import Input from "../components/form/Input";
 import { useForm } from "../hooks/useForm";
 import { LoginFormData } from "../types/form";
@@ -9,6 +8,7 @@ import { handleLoginError } from "../utils/handleAxiosErrors";
 import { useMessage } from "../hooks/MessageContext";
 import { saveAuthToken } from "../utils/tokenStorage";
 import useMessageHandling from "../hooks/useMessageHandling";
+import Navbar from "../components/common/Navbar";
 
 const Login = () => {
   const { formData, handleInputChange } = useForm<LoginFormData>({
@@ -40,7 +40,8 @@ const Login = () => {
   useMessageHandling({ setErrorMsg, setSuccessMsg });
 
   return (
-    <Layout>
+    <div className="auth-container">
+      <Navbar />
       <div className="form-container">
         <div className="form-wrapper">
           {errorMsg && <p className="error-msg">{errorMsg}</p>}
@@ -68,7 +69,7 @@ const Login = () => {
           </form>
         </div>
       </div>
-    </Layout>
+    </div>
   );
 };
 

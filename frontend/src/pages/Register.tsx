@@ -1,4 +1,3 @@
-import Layout from "../components/common/Layout";
 import { RegisterFormData } from "../types/form";
 import { useForm } from "../hooks/useForm";
 import Input from "../components/form/Input";
@@ -7,6 +6,7 @@ import axios from "axios";
 import { handleRegisterError } from "../utils/handleAxiosErrors";
 import { useMessage } from "../hooks/MessageContext";
 import useMessageHandling from "../hooks/useMessageHandling";
+import Navbar from "../components/common/Navbar";
 
 const Register = () => {
   const { formData, handleInputChange } = useForm<RegisterFormData>({
@@ -44,7 +44,8 @@ const Register = () => {
   useMessageHandling({ setErrorMsg, setSuccessMsg });
 
   return (
-    <Layout>
+    <div className="auth-container">
+      <Navbar />
       <div className="form-container">
         <div className="form-wrapper">
           {errorMsg && <p className="error-msg">{errorMsg}</p>}
@@ -78,7 +79,7 @@ const Register = () => {
           </form>
         </div>
       </div>
-    </Layout>
+    </div>
   );
 };
 
