@@ -10,7 +10,7 @@ body {
   font-size: 16px;
   background-color: rgba(204, 204, 204, 0.3);
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  padding: 0 10%;
+  /* padding: 0 10%; */
 }
 
 a {
@@ -61,13 +61,88 @@ ul {
   margin-bottom: 8px;
 }
 
+/* Layout */
+
+.layout-wrapper {
+  width: 100%;
+}
+
+.layout-container {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+/* main container  */
+
+.main-container {
+  width: 88%;
+  height: 100vh;
+  padding: 1.6rem 1rem 2rem 1rem;
+}
+
+/* Sidebar */
+
+.sidebar {
+  position: relative;
+  width: 12%;
+  background-color: #ccc;
+  height: 100vh;
+  padding-top: 2rem;
+  padding-left: 13px;
+  margin-right: 10px;
+}
+
+.sidebar h2 {
+  margin-bottom: 30px;
+}
+
+.sidebar ul li {
+  font-size: 20px;
+  margin-bottom: 2px;
+  padding-bottom: 10px;
+}
+
+.sidebar ul li:last-child {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  padding-left: 13px;
+  margin-bottom: 20px;
+}
+
+.logout-btn {
+  margin-top: 5px;
+  width: 150px;
+}
+
+.logout-btn:hover {
+  background-color: #708090;
+}
+
+/* Dashboard */
+
+.dashboard h1 {
+  margin-bottom: 10px;
+}
+
+.dashboard .dashboard-content {
+  margin-top: 25px;
+}
+
+/* Login & Register Page */
+
+.auth-container {
+  height: 100vh;
+  padding: 2rem 10%;
+}
+
 /* Navbar */
 
 .navbar-wrapper {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin: 2rem 0 2rem 0;
 }
 
 .navbar-wrapper .navbar-list {
@@ -81,10 +156,6 @@ ul {
   font-size: 22px;
 }
 
-.navbar-wrapper .logout-btn {
-  margin-top: 5px;
-  width: 150px;
-}
 /* Login & Register Form */
 
 .form-container {
@@ -92,7 +163,7 @@ ul {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin: 0 2rem;
+  margin-top: 2rem;
 }
 
 .form-wrapper {
@@ -188,10 +259,6 @@ ul {
 }
 
 /* Write Blog Form  */
-
-.blog-post-wrapper {
-  margin: 0 20%;
-}
 
 .blog-post-wrapper h1 {
   margin-bottom: 20px;
