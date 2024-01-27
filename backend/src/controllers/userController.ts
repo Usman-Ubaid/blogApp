@@ -15,8 +15,9 @@ const userController = {
         return res.status(400).json({ error: "Please fill all the fields" });
       }
 
-      const dbEmail = await checkExistingEmail(email);
-      if (dbEmail.length > 0) {
+      const dbUser = await checkExistingEmail(email);
+
+      if (dbUser && dbUser.length > 0) {
         return res.status(400).json({ error: "This email is already in use" });
       }
 
@@ -27,9 +28,14 @@ const userController = {
 
       const user = await insertUserDb(username, email, password);
 
+      const payload = {
+        id: user.insertId,
+        email,
+      };
+
       return res.status(200).json({
         message: "success",
-        data: { id: user.insertId, token: generateJWT(user.insertId) },
+        data: { id: user.insertId, token: generateJWT(payload) },
       });
     } catch (error) {
       console.log("Error registering user", error);
@@ -43,19 +49,24 @@ const userController = {
     try {
       const user = await checkExistingEmail(email);
 
-      if (user.length > 0) {
-        const { id, username, email, password: dbpassword } = user[0];
-        const checkPassword = await comparePassword(password, dbpassword);
-        if (checkPassword) {
+      if (user && user.length > 0) {
+        const payload = {
+          id: user[0].id,
+          email: user[0].email,
+        };
+        const checkPassword = await comparePassword(password, user[0].password);
+        if (!checkPassword) {
+          return res.status(401).json({ error: "Invalid credentials" });
+        } else {
+          const token = generateJWT(payload);
           return res.status(200).json({
             message: "Success",
-            data: { id, username, email, token: generateJWT(id) },
+            data: { id: user[0].id, email, token },
           });
         }
       } else {
         return res.status(404).json({ error: "Email not found" });
       }
-      return res.status(401).json({ error: "Invalid credentials" });
     } catch (error) {
       return res.status(500).json({ error: "Server Error" });
     }

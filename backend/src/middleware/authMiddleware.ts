@@ -12,7 +12,7 @@ export const protect = async (
     return res.status(401).json({ message: "No bearer token found" });
   }
 
-  const [, token] = bearer.split(" ");
+  const [_, token] = bearer.split(" ");
   if (!token) {
     return res.status(401).json({ message: "No token found" });
   }
@@ -21,11 +21,7 @@ export const protect = async (
     const payload = verifyJWT(token);
 
     if (payload) {
-      req.user = {
-        id: payload.user.id,
-        username: payload.user.username,
-        email: payload.user.email,
-      };
+      req.user = payload;
     }
 
     next();
