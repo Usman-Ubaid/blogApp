@@ -36,3 +36,17 @@ export const handlePostBlogApiError = (status: number) => {
 
   return message;
 };
+
+export const handleGetBlogsError = (status: number) => {
+  let message = "";
+
+  if (status === 404) {
+    message = "Incorrect URL";
+  } else if (status === 401) {
+    message = "Not Authorized";
+  } else {
+    message = "Failed to fetch blogs";
+  }
+
+  return message;
+};

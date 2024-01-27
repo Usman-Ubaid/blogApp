@@ -139,12 +139,6 @@ ul {
 
 /* Navbar */
 
-.navbar-wrapper {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
 .navbar-wrapper .navbar-list {
   display: flex;
   justify-content: flex-end;
@@ -291,4 +285,8 @@ textarea {
 .blog-form-wrapper .blog-content textarea {
   height: 250px;
   resize: none;
+}
+
+.blogs-wrapper {
+  border: 1px solid red;
 }
