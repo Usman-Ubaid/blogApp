@@ -5,6 +5,7 @@ import ProtectedRoutes from "../privateRoutes/ProtectedRoutes";
 import WriteBlog from "../pages/WriteBlog";
 import Dashboard from "../pages/Dashboard";
 import Blogs from "../pages/Blogs";
+import Blog from "../pages/Blog";
 
 const Routers = () => {
   const routes = [
@@ -25,6 +26,7 @@ const Routers = () => {
         <Route path="/writeBlog" element={<WriteBlog />} />
         <Route path="/" element={<Dashboard />} />
         <Route path="/blogs" element={<Blogs />} />
+        <Route path="/blog" element={<Blog />} />
       </Route>
       {routes.map((route) => (
         <Route key={route.id} path={route.path} element={route.element} />
