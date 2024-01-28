@@ -3,24 +3,16 @@ import { useEffect, useState } from "react";
 import { axiosPrivate } from "../services/api/axiosConfig";
 import axios from "axios";
 import { handleGetBlogsError } from "../utils/handleAxiosErrors";
-import BlogCard from "../components/blog/BlogCards";
-
-type BlogState = {
-  id: number;
-  heading: string;
-  body: string;
-  created_at: string;
-}[];
+import BlogCard, { BlogType } from "../components/blog/BlogCards";
 
 const Blogs = () => {
-  const [blogList, setBlogList] = useState<BlogState>();
+  const [blogList, setBlogList] = useState<BlogType[]>();
 
   useEffect(() => {
     const fetchBlogs = async () => {
       try {
         const results = await axiosPrivate.get("/blog");
         setBlogList(results.data.blogs);
-        console.log(results.data.blogs);
       } catch (error) {
         if (axios.isAxiosError(error) && error?.response) {
           const msg = handleGetBlogsError(error.response?.status);
