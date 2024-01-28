@@ -254,8 +254,8 @@ ul {
 
 /* Write Blog Form  */
 
-.blog-post-wrapper h1 {
-  margin-bottom: 20px;
+.blogs-wrapper h1 {
+  margin-bottom: 25px;
 }
 
 .blog-form-wrapper {
@@ -287,6 +287,24 @@ textarea {
   resize: none;
 }
 
-.blogs-wrapper {
-  border: 1px solid red;
+.blogs-content .blog-card-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.blog-card-wrapper .blog-card {
+  background-color: #ccc;
+  padding: 20px;
+  border-radius: 5px;
+}
+
+.blog-card-wrapper .blog-card span {
+  cursor: pointer;
+  color: rgb(44, 49, 116);
+  transition: color 0.2s;
+}
+
+.blog-card-wrapper .blog-card span:hover {
+  color: rgb(18, 30, 193);
 }

@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { axiosPrivate } from "../services/api/axiosConfig";
 import axios from "axios";
 import { handleGetBlogsError } from "../utils/handleAxiosErrors";
+import BlogCard from "../components/blog/BlogCards";
 
 type BlogState = {
   id: number;
@@ -12,13 +13,13 @@ type BlogState = {
 }[];
 
 const Blogs = () => {
-  const [data, setData] = useState<BlogState>();
+  const [blogList, setBlogList] = useState<BlogState>();
 
   useEffect(() => {
     const fetchBlogs = async () => {
       try {
         const results = await axiosPrivate.get("/blog");
-        setData(results.data.blogs);
+        setBlogList(results.data.blogs);
         console.log(results.data.blogs);
       } catch (error) {
         if (axios.isAxiosError(error) && error?.response) {
@@ -35,10 +36,7 @@ const Blogs = () => {
       <div className="blogs-wrapper">
         <h1>Blogs</h1>
         <div className="blogs-content">
-          <p>
-            {data &&
-              data.map((item) => <span key={item.id}>{item?.heading}</span>)}
-          </p>
+          {blogList && <BlogCard data={blogList} />}
         </div>
       </div>
     </Layout>
