@@ -254,7 +254,7 @@ ul {
 
 /* Write Blog Form  */
 
-.blogs-wrapper h1 {
+.blog-post-wrapper h1 {
   margin-bottom: 25px;
 }
 
@@ -282,21 +282,18 @@ textarea {
   font-size: 20px;
 }
 
-.blog-form-wrapper .blog-content textarea {
+.blog-form-wrapper .content-textarea textarea {
   height: 250px;
   resize: none;
 }
 
-.blogs-content .blog-card-wrapper {
-  display: flex;
-  align-items: center;
-  gap: 20px;
-}
-
 .blog-card-wrapper .blog-card {
+  margin-bottom: 10px;
+  width: 170px;
   background-color: #ccc;
   padding: 20px;
   border-radius: 5px;
+  text-align: center;
 }
 
 .blog-card-wrapper .blog-card span {
@@ -307,4 +304,40 @@ textarea {
 
 .blog-card-wrapper .blog-card span:hover {
   color: rgb(18, 30, 193);
+}
+
+/* Blogs */
+
+.blogs-wrapper h1 {
+  margin-bottom: 25px;
+}
+
+/* Blog */
+
+.blog-details {
+  height: auto;
+  text-align: center;
+  padding: 0 20%;
+}
+
+.blog-details .blog-head {
+  margin-bottom: 20px;
+}
+
+.blog-details .blog-head h1 {
+  font-weight: 500;
+  margin-bottom: 4px;
+}
+
+.blog-details .blog-head span {
+  margin-right: 5px;
+}
+
+.blog-details .blog-head span:last-child {
+  margin-left: 10px;
+}
+
+.blog-details .blog-content {
+  text-align: left;
+  font-size: 18px;
 }
