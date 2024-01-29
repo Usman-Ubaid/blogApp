@@ -5,7 +5,7 @@ import axios from "axios";
 import { handleGetBlogsError } from "../utils/handleAxiosErrors";
 import BlogCard, { BlogType } from "../components/blog/BlogCards";
 
-const Blogs = () => {
+const BlogsList = () => {
   const [blogList, setBlogList] = useState<BlogType[]>();
 
   useEffect(() => {
@@ -35,4 +35,4 @@ const Blogs = () => {
   );
 };
 
-export default Blogs;
+export default BlogsList;

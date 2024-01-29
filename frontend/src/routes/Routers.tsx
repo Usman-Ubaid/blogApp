@@ -4,7 +4,7 @@ import Register from "../pages/Register";
 import ProtectedRoutes from "../privateRoutes/ProtectedRoutes";
 import WriteBlog from "../pages/WriteBlog";
 import Dashboard from "../pages/Dashboard";
-import Blogs from "../pages/Blogs";
+import Blogs from "../pages/BlogsList";
 import Blog from "../pages/Blog";
 
 const Routers = () => {

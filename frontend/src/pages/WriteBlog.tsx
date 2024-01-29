@@ -49,7 +49,7 @@ const WriteBlog = () => {
                 value={formData.title}
               />
             </div>
-            <div className="blog-content">
+            <div className="content-textarea">
               <label>Content*</label>
               <textarea
                 name="content"
