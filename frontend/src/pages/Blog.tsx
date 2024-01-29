@@ -1,8 +1,12 @@
+import { useParams } from "react-router-dom";
 import Layout from "../components/common/Layout";
 import { useBlog } from "../hooks/SingleBlogContext";
+import { useEffect } from "react";
+import { axiosPrivate } from "../services/api/axiosConfig";
 
 const Blog = () => {
-  const { selectedBlog } = useBlog();
+  const { id } = useParams();
+  const { selectedBlog, setSelectedBlog } = useBlog();
   const { heading, body, created_at } = selectedBlog;
 
   const originalDate = new Date(created_at);
@@ -12,6 +16,19 @@ const Blog = () => {
     day: "numeric",
   };
   const formattedDate = originalDate.toLocaleDateString("en-US", options);
+
+  useEffect(() => {
+    const fetchIndividualBlog = async () => {
+      try {
+        const res = await axiosPrivate.get(`/blog/${id}`);
+        setSelectedBlog(res.data?.blog[0]);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    fetchIndividualBlog();
+  }, [id]);
 
   return (
     <Layout>

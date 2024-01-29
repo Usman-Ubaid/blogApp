@@ -26,7 +26,7 @@ const Routers = () => {
         <Route path="/writeBlog" element={<WriteBlog />} />
         <Route path="/" element={<Dashboard />} />
         <Route path="/blogs" element={<Blogs />} />
-        <Route path="/blog" element={<Blog />} />
+        <Route path="/blog/:id" element={<Blog />} />
       </Route>
       {routes.map((route) => (
         <Route key={route.id} path={route.path} element={route.element} />
