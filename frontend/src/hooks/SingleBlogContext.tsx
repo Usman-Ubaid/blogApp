@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import { BlogType } from "../components/blog/BlogCards";
 
 type BlogContext = {
@@ -21,7 +21,21 @@ export const SingleBlogProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
-  const [selectedBlog, setSelectedBlog] = useState<BlogType>(Object);
+  const storedBlog: BlogType = JSON.parse(
+    localStorage.getItem("selectedBlog") || "null"
+  );
+  const [selectedBlog, setSelectedBlog] = useState<BlogType>(
+    storedBlog || {
+      id: 0,
+      heading: "",
+      body: "",
+      created_at: "",
+    }
+  );
+
+  useEffect(() => {
+    localStorage.setItem("selectedBlog", JSON.stringify(selectedBlog));
+  }, [selectedBlog]);
 
   return (
     <SingleBlogContext.Provider value={{ selectedBlog, setSelectedBlog }}>
