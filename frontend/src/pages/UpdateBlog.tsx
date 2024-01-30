@@ -1,12 +1,13 @@
 import axios from "axios";
 import Layout from "../components/common/Layout";
 import useMessageHandling from "../hooks/useMessageHandling";
-import { postBlog } from "../services/api/blogApi";
+import { updateBlog } from "../services/api/blogApi";
 import { handlePostBlogApiError } from "../utils/handleAxiosErrors";
 import { useMessage } from "../hooks/MessageContext";
 import { useForm } from "../hooks/useForm";
 import { BlogData } from "../types/form";
 import Input from "../components/form/Input";
+import { useParams } from "react-router-dom";
 
 const UpdateBlog = () => {
   const { formData, handleInputChange } = useForm<BlogData>({
@@ -14,13 +15,19 @@ const UpdateBlog = () => {
     content: "",
   });
   const { errorMsg, setErrorMsg, successMsg, setSuccessMsg } = useMessage();
+  const { id } = useParams();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      const res = await postBlog(formData);
-      setSuccessMsg("Blog posted successfully");
-      console.log(res.statusText);
+      if (id) {
+        const res = await updateBlog(formData, id);
+        setSuccessMsg("Blog posted successfully");
+        console.log(res);
+        // console.log(res.statusText);
+      } else {
+        console.log("No id found");
+      }
     } catch (error) {
       if (axios.isAxiosError(error) && error.response) {
         const err = handlePostBlogApiError(error.response.status);
@@ -35,7 +42,7 @@ const UpdateBlog = () => {
   return (
     <Layout>
       <div className="blog-post-wrapper">
-        <h1>Create Blog</h1>
+        <h1>Update Blog</h1>
         <div className="blog-form-wrapper">
           {errorMsg && <p className="error-msg">{errorMsg}</p>}
           {successMsg && <p className="success-msg">{successMsg}</p>}
@@ -60,7 +67,7 @@ const UpdateBlog = () => {
               ></textarea>
             </div>
             <button type="submit" className="btn">
-              Publish
+              Update
             </button>
           </form>
         </div>
