@@ -6,6 +6,7 @@ import WriteBlog from "../pages/WriteBlog";
 import Dashboard from "../pages/Dashboard";
 import Blogs from "../pages/BlogsList";
 import Blog from "../pages/Blog";
+import UpdateBlog from "../pages/UpdateBlog";
 
 const Routers = () => {
   const routes = [
@@ -27,6 +28,7 @@ const Routers = () => {
         <Route path="/" element={<Dashboard />} />
         <Route path="/blogs" element={<Blogs />} />
         <Route path="/blog/:id" element={<Blog />} />
+        <Route path="/updateBlog/:id" element={<UpdateBlog />} />
       </Route>
       {routes.map((route) => (
         <Route key={route.id} path={route.path} element={route.element} />

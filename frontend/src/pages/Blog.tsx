@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Layout from "../components/common/Layout";
 import { useBlog } from "../hooks/SingleBlogContext";
 import { useEffect } from "react";
@@ -8,6 +8,7 @@ const Blog = () => {
   const { id } = useParams();
   const { selectedBlog, setSelectedBlog } = useBlog();
   const { heading, body, created_at } = selectedBlog;
+  const navigate = useNavigate();
 
   const originalDate = new Date(created_at);
   const options: Intl.DateTimeFormatOptions = {
@@ -16,6 +17,10 @@ const Blog = () => {
     day: "numeric",
   };
   const formattedDate = originalDate.toLocaleDateString("en-US", options);
+
+  const handleEditPost = () => {
+    navigate(`/updateBlog/${id}`);
+  };
 
   useEffect(() => {
     const fetchIndividualBlog = async () => {
@@ -35,8 +40,13 @@ const Blog = () => {
       <div className="blog-details">
         <div className="blog-head">
           <h1>{heading}</h1>
-          <span>{formattedDate}</span>
-          <span>Edit Post</span>
+          <div>
+            <span>{formattedDate}</span>
+            <button onClick={handleEditPost} className="common-btn">
+              Edit Post
+            </button>
+            <button className="common-btn">Delete Post</button>
+          </div>
         </div>
         <div className="blog-content">
           <p>{body}</p>

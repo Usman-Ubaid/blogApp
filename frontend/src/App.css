@@ -330,7 +330,21 @@ textarea {
 }
 
 .blog-details .blog-head span {
+  font-size: 15px;
   margin-right: 5px;
+}
+
+.blog-details .blog-head .common-btn {
+  margin-left: 5px;
+  font-size: 15px;
+  padding: 2px;
+  color: #823eb7;
+  border: none;
+}
+
+.blog-details .blog-head .common-btn:hover {
+  cursor: pointer;
+  text-decoration: underline;
 }
 
 .blog-details .blog-head span:last-child {
