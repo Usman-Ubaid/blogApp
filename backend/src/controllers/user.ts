@@ -3,7 +3,7 @@ import {
   checkExistingUsername,
   checkExistingEmail,
   insertUserDb,
-} from "../utils/queries";
+} from "../utils/authQueries";
 import { comparePassword, generateJWT } from "../module/auth";
 import { isValidEmail } from "../utils/emailValidation";
 
