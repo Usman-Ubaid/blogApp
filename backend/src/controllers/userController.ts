@@ -5,6 +5,7 @@ import {
   insertUserDb,
 } from "../utils/queries";
 import { comparePassword, generateJWT } from "../module/auth";
+import { isValidEmail } from "../utils/emailValidation";
 
 const userController = {
   registerUser: async (req: Request, res: Response) => {
@@ -13,6 +14,10 @@ const userController = {
     try {
       if (!username || !email || !password) {
         return res.status(400).json({ error: "Please fill all the fields" });
+      }
+
+      if (!isValidEmail(email)) {
+        return res.status(400).json({ error: "Invalid email format" });
       }
 
       const dbUser = await checkExistingEmail(email);
