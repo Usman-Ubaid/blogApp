@@ -3,7 +3,7 @@ import Layout from "../components/common/Layout";
 import Input from "../components/form/Input";
 import { useMessage } from "../hooks/MessageContext";
 import { useForm } from "../hooks/useForm";
-import { postBlog } from "../services/api/blogApi";
+import { postBlogApi } from "../services/api/blogApi";
 import { BlogData } from "../types/form";
 import { handlePostBlogApiError } from "../utils/handleAxiosErrors";
 import useMessageHandling from "../hooks/useMessageHandling";
@@ -18,7 +18,7 @@ const WriteBlog = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      const res = await postBlog(formData);
+      const res = await postBlogApi(formData);
       setSuccessMsg("Blog posted successfully");
       console.log(res.statusText);
     } catch (error) {

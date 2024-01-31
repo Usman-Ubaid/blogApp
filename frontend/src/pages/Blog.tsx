@@ -3,6 +3,7 @@ import Layout from "../components/common/Layout";
 import { useBlog } from "../hooks/SingleBlogContext";
 import { useEffect } from "react";
 import { axiosPrivate } from "../services/api/axiosConfig";
+import { deleteBlogApi } from "../services/api/blogApi";
 
 const Blog = () => {
   const { id } = useParams();
@@ -20,6 +21,14 @@ const Blog = () => {
 
   const handleEditPost = () => {
     navigate(`/updateBlog/${id}`);
+  };
+
+  const handleDeletePost = async () => {
+    if (id) {
+      const result = await deleteBlogApi(id);
+      console.log(result);
+      navigate("/blogs");
+    }
   };
 
   useEffect(() => {
@@ -45,7 +54,9 @@ const Blog = () => {
             <button onClick={handleEditPost} className="common-btn">
               Edit Post
             </button>
-            <button className="common-btn">Delete Post</button>
+            <button onClick={handleDeletePost} className="common-btn">
+              Delete Post
+            </button>
           </div>
         </div>
         <div className="blog-content">

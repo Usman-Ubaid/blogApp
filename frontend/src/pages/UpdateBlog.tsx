@@ -1,7 +1,7 @@
 import axios from "axios";
 import Layout from "../components/common/Layout";
 import useMessageHandling from "../hooks/useMessageHandling";
-import { updateBlog } from "../services/api/blogApi";
+import { updateBlogApi } from "../services/api/blogApi";
 import { handlePostBlogApiError } from "../utils/handleAxiosErrors";
 import { useMessage } from "../hooks/MessageContext";
 import { useForm } from "../hooks/useForm";
@@ -24,7 +24,7 @@ const UpdateBlog = () => {
     e.preventDefault();
     try {
       if (id) {
-        const res = await updateBlog(formData, id);
+        const res = await updateBlogApi(formData, id);
         setSuccessMsg("Blog posted successfully");
         console.log(res);
       } else {
