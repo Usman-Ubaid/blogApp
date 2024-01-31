@@ -1,6 +1,6 @@
 import { ChangeEvent, useState } from "react";
 
-export const useForm = <T>(initialState: T) => {
+export const useFormHook = <T>(initialState: T) => {
   const [formData, setFormData] = useState<T>(initialState);
 
   const handleInputChange = (

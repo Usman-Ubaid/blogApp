@@ -1,4 +1,4 @@
-import { BlogData } from "../../types/form";
+import { BlogData } from "../../types/blog";
 import { axiosPrivate } from "./axiosConfig";
 
 export const postBlogApi = async (blogData: BlogData) => {

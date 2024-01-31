@@ -9,7 +9,4 @@ export type LoginFormData = {
   password: string;
 };
 
-export type BlogData = {
-  title: string;
-  content: string;
-};
+

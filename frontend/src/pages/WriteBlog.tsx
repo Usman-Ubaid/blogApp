@@ -2,14 +2,14 @@ import axios from "axios";
 import Layout from "../components/common/Layout";
 import Input from "../components/form/Input";
 import { useMessage } from "../hooks/MessageContext";
-import { useForm } from "../hooks/useForm";
+import { useFormHook } from "../hooks/useFormHook";
 import { postBlogApi } from "../services/api/blogApi";
-import { BlogData } from "../types/form";
 import { handlePostBlogApiError } from "../utils/handleAxiosErrors";
 import useMessageHandling from "../hooks/useMessageHandling";
+import { BlogData } from "../types/blog";
 
 const WriteBlog = () => {
-  const { formData, handleInputChange } = useForm<BlogData>({
+  const { formData, handleInputChange } = useFormHook<BlogData>({
     title: "",
     content: "",
   });

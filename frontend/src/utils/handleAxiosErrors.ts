@@ -50,3 +50,15 @@ export const handleGetBlogsError = (status: number) => {
 
   return message;
 };
+
+export const handleDeleteBlogError = (status: number) => {
+  let message = "";
+
+  if (status === 400) {
+    message = "Blog Not Found";
+  } else {
+    message = "Failed to delete Blog";
+  }
+
+  return message;
+};

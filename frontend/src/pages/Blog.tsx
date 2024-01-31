@@ -1,9 +1,11 @@
 import { useNavigate, useParams } from "react-router-dom";
+import axios from "axios";
+import { useEffect } from "react";
 import Layout from "../components/common/Layout";
 import { useBlog } from "../hooks/SingleBlogContext";
-import { useEffect } from "react";
 import { axiosPrivate } from "../services/api/axiosConfig";
 import { deleteBlogApi } from "../services/api/blogApi";
+import { formatDate } from "../utils/formatDate";
 
 const Blog = () => {
   const { id } = useParams();
@@ -11,23 +13,27 @@ const Blog = () => {
   const { heading, body, created_at } = selectedBlog;
   const navigate = useNavigate();
 
-  const originalDate = new Date(created_at);
-  const options: Intl.DateTimeFormatOptions = {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  };
-  const formattedDate = originalDate.toLocaleDateString("en-US", options);
+  const formattedDate = formatDate(created_at);
 
   const handleEditPost = () => {
     navigate(`/updateBlog/${id}`);
   };
 
   const handleDeletePost = async () => {
-    if (id) {
-      const result = await deleteBlogApi(id);
-      console.log(result);
-      navigate("/blogs");
+    try {
+      if (id) {
+        await deleteBlogApi(id);
+        console.log("Blog deleted");
+        navigate("/blogs");
+      }
+    } catch (error) {
+      if (axios.isAxiosError(error) && error.response) {
+        if (error.response.status === 400) {
+          console.log("Blog Not Found");
+        } else {
+          console.log("Error deleting the blog:", error);
+        }
+      }
     }
   };
 

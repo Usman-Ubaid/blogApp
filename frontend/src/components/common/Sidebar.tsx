@@ -1,8 +1,9 @@
 import { Link, useNavigate } from "react-router-dom";
+import { getStorageToken } from "../../utils/tokenStorage";
 
 const Sidebar = () => {
   const navigate = useNavigate();
-  const token = localStorage.getItem("auth-token");
+  const token = getStorageToken();
 
   const handleLogout = () => {
     localStorage.removeItem("auth-token");

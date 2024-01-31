@@ -1,15 +1,15 @@
+import axios from "axios";
 import { RegisterFormData } from "../types/form";
-import { useForm } from "../hooks/useForm";
+import { useFormHook } from "../hooks/useFormHook";
 import Input from "../components/form/Input";
 import { registerApi } from "../services/api/Auth";
-import axios from "axios";
 import { handleRegisterError } from "../utils/handleAxiosErrors";
 import { useMessage } from "../hooks/MessageContext";
 import useMessageHandling from "../hooks/useMessageHandling";
 import Navbar from "../components/common/Navbar";
 
 const Register = () => {
-  const { formData, handleInputChange } = useForm<RegisterFormData>({
+  const { formData, handleInputChange } = useFormHook<RegisterFormData>({
     username: "",
     email: "",
     password: "",

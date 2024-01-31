@@ -1,15 +1,5 @@
 import { useNavigate } from "react-router-dom";
-
-export type BlogCardProps = {
-  data: BlogType[];
-};
-
-export type BlogType = {
-  id: number;
-  heading: string;
-  body: string;
-  created_at: string;
-};
+import { BlogCardProps } from "../../types/blog";
 
 const BlogCard = ({ data }: BlogCardProps) => {
   const navigate = useNavigate();

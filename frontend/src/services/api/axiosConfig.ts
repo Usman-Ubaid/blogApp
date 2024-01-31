@@ -1,4 +1,5 @@
 import axios from "axios";
+import { getStorageToken } from "../../utils/tokenStorage";
 
 const BASE_URL = "http://localhost:3001/api";
 
@@ -14,7 +15,7 @@ export const axiosPrivate = axios.create({
 
 axiosPrivate.interceptors.request.use(
   (config) => {
-    const authToken = localStorage.getItem("auth-token");
+    const authToken = getStorageToken();
     if (authToken) {
       config.headers.Authorization = `Bearer ${authToken}`;
     }

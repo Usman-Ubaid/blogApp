@@ -1,18 +1,18 @@
+import { useEffect } from "react";
+import { useParams } from "react-router-dom";
 import axios from "axios";
 import Layout from "../components/common/Layout";
 import useMessageHandling from "../hooks/useMessageHandling";
 import { updateBlogApi } from "../services/api/blogApi";
 import { handlePostBlogApiError } from "../utils/handleAxiosErrors";
 import { useMessage } from "../hooks/MessageContext";
-import { useForm } from "../hooks/useForm";
-import { BlogData } from "../types/form";
+import { useFormHook } from "../hooks/useFormHook";
 import Input from "../components/form/Input";
-import { useParams } from "react-router-dom";
 import { useBlog } from "../hooks/SingleBlogContext";
-import { useEffect } from "react";
+import { BlogData } from "../types/blog";
 
 const UpdateBlog = () => {
-  const { formData, setFormData, handleInputChange } = useForm<BlogData>({
+  const { formData, setFormData, handleInputChange } = useFormHook<BlogData>({
     title: "",
     content: "",
   });
@@ -25,10 +25,10 @@ const UpdateBlog = () => {
     try {
       if (id) {
         const res = await updateBlogApi(formData, id);
-        setSuccessMsg("Blog posted successfully");
+        setSuccessMsg("Blog updated successfully");
         console.log(res);
       } else {
-        console.log("No id found");
+        console.log("Invalid id");
       }
     } catch (error) {
       if (axios.isAxiosError(error) && error.response) {

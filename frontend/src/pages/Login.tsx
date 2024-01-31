@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Input from "../components/form/Input";
-import { useForm } from "../hooks/useForm";
+import { useFormHook } from "../hooks/useFormHook";
 import { LoginFormData } from "../types/form";
 import { loginApi } from "../services/api/Auth";
 import { handleLoginError } from "../utils/handleAxiosErrors";
@@ -11,7 +11,7 @@ import useMessageHandling from "../hooks/useMessageHandling";
 import Navbar from "../components/common/Navbar";
 
 const Login = () => {
-  const { formData, handleInputChange } = useForm<LoginFormData>({
+  const { formData, handleInputChange } = useFormHook<LoginFormData>({
     email: "",
     password: "",
   });

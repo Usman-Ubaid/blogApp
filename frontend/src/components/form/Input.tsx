@@ -1,11 +1,4 @@
-type InputProps = {
-  placeholder?: string;
-  name: string;
-  id: string;
-  value: string;
-  height?: number;
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-};
+import { InputProps } from "../../types/input";
 
 const Input = ({ name, id, onChange, value, placeholder }: InputProps) => {
   return (

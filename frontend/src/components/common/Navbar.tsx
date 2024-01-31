@@ -1,7 +1,8 @@
 import { Link } from "react-router-dom";
+import { getStorageToken } from "../../utils/tokenStorage";
 
 const Navbar = () => {
-  const token = localStorage.getItem("auth-token");
+  const token = getStorageToken();
 
   return (
     <div className="navbar-wrapper">

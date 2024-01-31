@@ -1,9 +1,10 @@
-import Layout from "../components/common/Layout";
 import { useEffect, useState } from "react";
-import { axiosPrivate } from "../services/api/axiosConfig";
 import axios from "axios";
+import Layout from "../components/common/Layout";
+import { axiosPrivate } from "../services/api/axiosConfig";
 import { handleGetBlogsError } from "../utils/handleAxiosErrors";
-import BlogCard, { BlogType } from "../components/blog/BlogCards";
+import BlogCard from "../components/blog/BlogCards";
+import { BlogType } from "../types/blog";
 
 const BlogsList = () => {
   const [blogList, setBlogList] = useState<BlogType[]>();
@@ -30,6 +31,7 @@ const BlogsList = () => {
         <div className="blogs-content">
           {blogList && <BlogCard data={blogList} />}
         </div>
+        <div>{!blogList && <h2>No Blogs Found</h2>}</div>
       </div>
     </Layout>
   );

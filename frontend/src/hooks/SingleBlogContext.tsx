@@ -1,5 +1,5 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import { BlogType } from "../components/blog/BlogCards";
+import { BlogType } from "../types/blog";
 
 type BlogContext = {
   selectedBlog: BlogType;
