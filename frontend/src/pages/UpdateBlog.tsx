@@ -8,12 +8,15 @@ import { useForm } from "../hooks/useForm";
 import { BlogData } from "../types/form";
 import Input from "../components/form/Input";
 import { useParams } from "react-router-dom";
+import { useBlog } from "../hooks/SingleBlogContext";
+import { useEffect } from "react";
 
 const UpdateBlog = () => {
-  const { formData, handleInputChange } = useForm<BlogData>({
+  const { formData, setFormData, handleInputChange } = useForm<BlogData>({
     title: "",
     content: "",
   });
+  const { selectedBlog } = useBlog();
   const { errorMsg, setErrorMsg, successMsg, setSuccessMsg } = useMessage();
   const { id } = useParams();
 
@@ -24,7 +27,6 @@ const UpdateBlog = () => {
         const res = await updateBlog(formData, id);
         setSuccessMsg("Blog posted successfully");
         console.log(res);
-        // console.log(res.statusText);
       } else {
         console.log("No id found");
       }
@@ -35,6 +37,13 @@ const UpdateBlog = () => {
       }
     }
   };
+
+  useEffect(() => {
+    setFormData({
+      title: selectedBlog.heading,
+      content: selectedBlog.body,
+    });
+  }, [selectedBlog]);
 
   // Reset messages when the component unmounts or when errorMsg/successMsg change
   useMessageHandling({ setErrorMsg, setSuccessMsg });
