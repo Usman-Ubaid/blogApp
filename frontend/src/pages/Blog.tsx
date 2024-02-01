@@ -1,13 +1,15 @@
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Layout from "../components/common/Layout";
 import { useBlog } from "../hooks/SingleBlogContext";
 import { axiosPrivate } from "../services/api/axiosConfig";
 import { deleteBlogApi } from "../services/api/blogApi";
 import { formatDate } from "../utils/formatDate";
+import DeleteBlogPortal from "../components/DeletePopup";
 
 const Blog = () => {
+  const [isOpen, setIsOpen] = useState(false);
   const { id } = useParams();
   const { selectedBlog, setSelectedBlog } = useBlog();
   const { heading, body, created_at } = selectedBlog;
@@ -50,6 +52,14 @@ const Blog = () => {
     fetchIndividualBlog();
   }, [id]);
 
+  const openPopup = () => {
+    setIsOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsOpen(false);
+  };
+
   return (
     <Layout>
       <div className="blog-details">
@@ -60,9 +70,23 @@ const Blog = () => {
             <button onClick={handleEditPost} className="common-btn">
               Edit Post
             </button>
-            <button onClick={handleDeletePost} className="common-btn">
+            <button onClick={openPopup} className="common-btn">
               Delete Post
             </button>
+
+            {isOpen && (
+              <DeleteBlogPortal onOpen={isOpen}>
+                <div className="portal-content">
+                  <p>Are you sure you want to delete the blog?</p>
+                  <button className="btn portal-btn" onClick={handleDeletePost}>
+                    Delete
+                  </button>
+                  <button className="btn portal-btn" onClick={closeModal}>
+                    Cancel
+                  </button>
+                </div>
+              </DeleteBlogPortal>
+            )}
           </div>
         </div>
         <div className="blog-content">
