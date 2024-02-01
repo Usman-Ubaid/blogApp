@@ -4,13 +4,13 @@ import Sidebar from "./Sidebar";
 
 const Layout = ({ children }: { children: ReactNode }) => {
   return (
-    <div className="layout-wrapper">
-      <div className="layout-container">
+    <div className="layout-container">
+      <div>
         <Sidebar />
-        <div className="main-container">
-          <Navbar />
-          <div>{children}</div>
-        </div>
+      </div>
+      <div className="main-container">
+        <Navbar />
+        <div>{children}</div>
       </div>
     </div>
   );

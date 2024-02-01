@@ -10,7 +10,6 @@ body {
   font-size: 16px;
   background-color: rgba(204, 204, 204, 0.3);
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  /* padding: 0 10%; */
 }
 
 a {
@@ -63,31 +62,27 @@ ul {
 
 /* Layout */
 
-.layout-wrapper {
-  width: 100%;
-}
-
 .layout-container {
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
+  display: grid;
+  grid-template-columns: 200px calc(100% - 200px);
 }
 
 /* main container  */
 
 .main-container {
-  width: 88%;
-  height: 100vh;
   padding: 1.6rem 1rem 2rem 1rem;
+  margin-left: 10px;
 }
 
 /* Sidebar */
 
 .sidebar {
-  position: relative;
-  width: 12%;
-  background-color: #ccc;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 200px;
   height: 100vh;
+  background-color: #ccc;
   padding-top: 2rem;
   padding-left: 13px;
   margin-right: 10px;
