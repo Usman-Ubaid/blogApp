@@ -66,7 +66,7 @@ const Blog = () => {
           </div>
         </div>
         <div className="blog-content">
-          <p>{body}</p>
+          <p dangerouslySetInnerHTML={{ __html: body }} />
         </div>
       </div>
     </Layout>

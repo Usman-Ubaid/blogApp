@@ -24,9 +24,9 @@ const UpdateBlog = () => {
     e.preventDefault();
     try {
       if (id) {
-        const res = await updateBlogApi(formData, id);
+        await updateBlogApi(formData, id);
         setSuccessMsg("Blog updated successfully");
-        console.log(res);
+        console.log("Updated");
       } else {
         console.log("Invalid id");
       }

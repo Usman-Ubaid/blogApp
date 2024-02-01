@@ -1,10 +1,10 @@
 import { BlogData } from "../../types/blog";
 import { axiosPrivate } from "./axiosConfig";
 
-export const postBlogApi = async (blogData: BlogData) => {
+export const postBlogApi = async (title: string, content: string) => {
   const response = axiosPrivate.post("/blog", {
-    heading: blogData.title,
-    body: blogData.content,
+    heading: title,
+    body: content,
   });
   return response;
 };

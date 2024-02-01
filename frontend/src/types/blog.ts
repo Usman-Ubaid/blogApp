@@ -11,5 +11,5 @@ export type BlogType = {
 
 export type BlogData = {
   title: string;
-  content: string;
+  content?: string;
 };

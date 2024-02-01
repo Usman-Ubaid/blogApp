@@ -274,17 +274,16 @@ textarea {
   margin-bottom: 10px;
 }
 
-.blog-form-wrapper form input,
-textarea {
+.blog-form-wrapper form input {
   border-radius: 5px;
   border: 1px solid #ccc;
   padding: 5px 8px;
   font-size: 20px;
 }
 
-.blog-form-wrapper .content-textarea textarea {
+.blog-form-wrapper .content-textarea .text-editor {
   height: 250px;
-  resize: none;
+  margin-bottom: 30px;
 }
 
 .blog-card-wrapper .blog-card {

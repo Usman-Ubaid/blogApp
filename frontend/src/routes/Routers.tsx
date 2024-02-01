@@ -4,7 +4,7 @@ import Register from "../pages/Register";
 import ProtectedRoutes from "../privateRoutes/ProtectedRoutes";
 import WriteBlog from "../pages/WriteBlog";
 import Dashboard from "../pages/Dashboard";
-import Blogs from "../pages/BlogsList";
+import BlogsList from "../pages/BlogsList";
 import Blog from "../pages/Blog";
 import UpdateBlog from "../pages/UpdateBlog";
 
@@ -26,7 +26,7 @@ const Routers = () => {
       <Route element={<ProtectedRoutes />}>
         <Route path="/writeBlog" element={<WriteBlog />} />
         <Route path="/" element={<Dashboard />} />
-        <Route path="/blogs" element={<Blogs />} />
+        <Route path="/blogs" element={<BlogsList />} />
         <Route path="/blog/:id" element={<Blog />} />
         <Route path="/updateBlog/:id" element={<UpdateBlog />} />
       </Route>
