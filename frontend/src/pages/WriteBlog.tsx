@@ -1,4 +1,7 @@
 import axios from "axios";
+import ReactQuill from "react-quill";
+import { useState } from "react";
+import "react-quill/dist/quill.snow.css";
 import Layout from "../components/common/Layout";
 import Input from "../components/form/Input";
 import { useMessage } from "../hooks/MessageContext";
@@ -7,18 +10,20 @@ import { postBlogApi } from "../services/api/blogApi";
 import { handlePostBlogApiError } from "../utils/handleAxiosErrors";
 import useMessageHandling from "../hooks/useMessageHandling";
 import { BlogData } from "../types/blog";
+import { formats, modules } from "../constants/reactQuill/quillEditorConfig";
 
 const WriteBlog = () => {
+  const [quillBody, setQuillBody] = useState("");
   const { formData, handleInputChange } = useFormHook<BlogData>({
     title: "",
-    content: "",
   });
   const { errorMsg, setErrorMsg, successMsg, setSuccessMsg } = useMessage();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    console.log(formData);
     try {
-      const res = await postBlogApi(formData);
+      const res = await postBlogApi(formData.title, quillBody);
       setSuccessMsg("Blog posted successfully");
       console.log(res.statusText);
     } catch (error) {
@@ -51,13 +56,16 @@ const WriteBlog = () => {
             </div>
             <div className="content-textarea">
               <label>Content*</label>
-              <textarea
-                name="content"
+              <ReactQuill
+                className="text-editor"
+                modules={modules}
+                theme="snow"
+                onChange={(value) => setQuillBody(value)}
                 id="content"
-                onChange={handleInputChange}
-                value={formData.content}
-                required
-              ></textarea>
+                value={quillBody}
+                formats={formats}
+                placeholder="Enter the content..."
+              />
             </div>
             <button type="submit" className="btn">
               Publish
