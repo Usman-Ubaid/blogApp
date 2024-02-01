@@ -1,4 +1,3 @@
-import { BlogData } from "../../types/blog";
 import { axiosPrivate } from "./axiosConfig";
 
 export const postBlogApi = async (title: string, content: string) => {
@@ -9,10 +8,14 @@ export const postBlogApi = async (title: string, content: string) => {
   return response;
 };
 
-export const updateBlogApi = async (blogData: BlogData, id: string) => {
+export const updateBlogApi = async (
+  title: string,
+  content: string,
+  id: string
+) => {
   const response = await axiosPrivate.put(`/blog/${id}`, {
-    heading: blogData.title,
-    body: blogData.content,
+    heading: title,
+    body: content,
   });
   return response;
 };

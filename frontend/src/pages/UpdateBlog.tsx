@@ -1,5 +1,8 @@
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
+import { useState } from "react";
 import axios from "axios";
 import Layout from "../components/common/Layout";
 import useMessageHandling from "../hooks/useMessageHandling";
@@ -10,8 +13,11 @@ import { useFormHook } from "../hooks/useFormHook";
 import Input from "../components/form/Input";
 import { useBlog } from "../hooks/SingleBlogContext";
 import { BlogData } from "../types/blog";
+import { formats, modules } from "../constants/reactQuill/quillEditorConfig";
 
 const UpdateBlog = () => {
+  const [quillBody, setQuillBody] = useState("");
+
   const { formData, setFormData, handleInputChange } = useFormHook<BlogData>({
     title: "",
     content: "",
@@ -24,7 +30,7 @@ const UpdateBlog = () => {
     e.preventDefault();
     try {
       if (id) {
-        await updateBlogApi(formData, id);
+        await updateBlogApi(formData.title, quillBody, id);
         setSuccessMsg("Blog updated successfully");
         console.log("Updated");
       } else {
@@ -67,13 +73,16 @@ const UpdateBlog = () => {
             </div>
             <div className="content-textarea">
               <label>Content*</label>
-              <textarea
-                name="content"
+              <ReactQuill
+                className="text-editor"
+                modules={modules}
+                theme="snow"
+                onChange={(value) => setQuillBody(value)}
                 id="content"
-                onChange={handleInputChange}
-                value={formData.content}
-                required
-              ></textarea>
+                defaultValue={selectedBlog.body}
+                formats={formats}
+                placeholder="Enter the content..."
+              />
             </div>
             <button type="submit" className="btn">
               Update
