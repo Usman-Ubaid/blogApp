@@ -7,6 +7,7 @@ import { axiosPrivate } from "../services/api/axiosConfig";
 import { deleteBlogApi } from "../services/api/blogApi";
 import { formatDate } from "../utils/formatDate";
 import DeleteBlogPortal from "../components/DeletePopup";
+import { useBlogDataContext } from "../hooks/BlogDataContext";
 
 const Blog = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -14,6 +15,7 @@ const Blog = () => {
   const { selectedBlog, setSelectedBlog } = useBlog();
   const { heading, body, created_at } = selectedBlog;
   const navigate = useNavigate();
+  const { setBlogData } = useBlogDataContext();
 
   const formattedDate = formatDate(created_at);
 
@@ -25,6 +27,12 @@ const Blog = () => {
     try {
       if (id) {
         await deleteBlogApi(id);
+
+        setBlogData((prevValue) => {
+          const filterData = prevValue.filter((blog) => blog.id !== Number(id));
+          return filterData;
+        });
+
         console.log("Blog deleted");
         navigate("/blogs");
       }
