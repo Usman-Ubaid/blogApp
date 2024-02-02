@@ -14,6 +14,7 @@ import Input from "../components/form/Input";
 import { useBlog } from "../hooks/SingleBlogContext";
 import { BlogData } from "../types/blog";
 import { formats, modules } from "../constants/reactQuill/quillEditorConfig";
+import { useBlogDataContext } from "../hooks/BlogDataContext";
 
 const UpdateBlog = () => {
   const [quillBody, setQuillBody] = useState("");
@@ -25,12 +26,22 @@ const UpdateBlog = () => {
   const { selectedBlog } = useBlog();
   const { errorMsg, setErrorMsg, successMsg, setSuccessMsg } = useMessage();
   const { id } = useParams();
+  const { setBlogData } = useBlogDataContext();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
       if (id) {
         await updateBlogApi(formData.title, quillBody, id);
+
+        setBlogData((prevData) => {
+          const updatedData = prevData.map((blog) =>
+            String(blog.id) === id
+              ? { ...blog, heading: formData.title, body: quillBody }
+              : blog
+          );
+          return updatedData;
+        });
         setSuccessMsg("Blog updated successfully");
         console.log("Updated");
       } else {

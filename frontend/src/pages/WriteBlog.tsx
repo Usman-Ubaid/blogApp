@@ -11,6 +11,7 @@ import { handlePostBlogApiError } from "../utils/handleAxiosErrors";
 import useMessageHandling from "../hooks/useMessageHandling";
 import { BlogData } from "../types/blog";
 import { formats, modules } from "../constants/reactQuill/quillEditorConfig";
+import { useBlogDataContext } from "../hooks/BlogDataContext";
 
 const WriteBlog = () => {
   const [quillBody, setQuillBody] = useState("");
@@ -18,12 +19,13 @@ const WriteBlog = () => {
     title: "",
   });
   const { errorMsg, setErrorMsg, successMsg, setSuccessMsg } = useMessage();
+  const { setBlogData } = useBlogDataContext();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(formData);
     try {
       const res = await postBlogApi(formData.title, quillBody);
+      setBlogData((prevValue) => [...prevValue, res.data.blog]);
       setSuccessMsg("Blog posted successfully");
       console.log(res.statusText);
     } catch (error) {
