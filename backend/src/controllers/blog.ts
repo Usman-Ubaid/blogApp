@@ -18,7 +18,7 @@ const blogController = {
       if (result) {
         return res.status(201).json({
           message: "Success",
-          blog: { id: result?.id },
+          blog: { id: result?.id, heading, body },
         });
       } else {
         res
