@@ -21,7 +21,11 @@ const BlogDataContext = createContext<BlogContextType>({
   setBlogData: () => null,
 });
 
-export const BlogDataProvider = ({ children }: { children: React.ReactNode }) => {
+export const BlogDataProvider = ({
+  children,
+}: {
+  children: React.ReactNode;
+}) => {
   const [blogData, setBlogData] = useState<BlogType[]>([]);
 
   const fetchBlogs = async () => {

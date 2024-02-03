@@ -1,21 +1,20 @@
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Layout from "../components/common/Layout";
-import { useBlog } from "../hooks/SingleBlogContext";
-import { axiosPrivate } from "../services/api/axiosConfig";
 import { deleteBlogApi } from "../services/api/blogApi";
 import { formatDate } from "../utils/formatDate";
 import DeleteBlogPortal from "../components/DeletePopup";
 import { useBlogDataContext } from "../hooks/BlogDataContext";
+import { useIndividualBlog } from "../hooks/useIndividualBlog";
 
 const Blog = () => {
   const [isOpen, setIsOpen] = useState(false);
   const { id } = useParams();
-  const { selectedBlog, setSelectedBlog } = useBlog();
-  const { heading, body, created_at } = selectedBlog;
   const navigate = useNavigate();
   const { setBlogData } = useBlogDataContext();
+  const { selectedBlog } = useIndividualBlog(id as string);
+  const { heading, body, created_at } = selectedBlog;
 
   const formattedDate = formatDate(created_at);
 
@@ -46,19 +45,6 @@ const Blog = () => {
       }
     }
   };
-
-  useEffect(() => {
-    const fetchIndividualBlog = async () => {
-      try {
-        const res = await axiosPrivate.get(`/blog/${id}`);
-        setSelectedBlog(res.data?.blog[0]);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-
-    fetchIndividualBlog();
-  }, [id]);
 
   const openPopup = () => {
     setIsOpen(true);

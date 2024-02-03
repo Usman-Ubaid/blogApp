@@ -11,21 +11,22 @@ import { handlePostBlogApiError } from "../utils/handleAxiosErrors";
 import { useMessage } from "../hooks/MessageContext";
 import { useFormHook } from "../hooks/useFormHook";
 import Input from "../components/form/Input";
-import { useBlog } from "../hooks/SingleBlogContext";
 import { BlogData } from "../types/blog";
 import { formats, modules } from "../constants/reactQuill/quillEditorConfig";
 import { useBlogDataContext } from "../hooks/BlogDataContext";
+import { useIndividualBlog } from "../hooks/useIndividualBlog";
 
 const UpdateBlog = () => {
-  const [quillBody, setQuillBody] = useState("");
+  const { id } = useParams();
+  const { localCache, selectedBlog, setSelectedBlog } = useIndividualBlog(
+    id as string
+  );
+  const [quillBody, setQuillBody] = useState(selectedBlog?.body || "");
 
   const { formData, setFormData, handleInputChange } = useFormHook<BlogData>({
     title: "",
-    content: "",
   });
-  const { selectedBlog } = useBlog();
   const { errorMsg, setErrorMsg, successMsg, setSuccessMsg } = useMessage();
-  const { id } = useParams();
   const { setBlogData } = useBlogDataContext();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -42,6 +43,18 @@ const UpdateBlog = () => {
           );
           return updatedData;
         });
+
+        setSelectedBlog((prevValue) => ({
+          ...prevValue,
+          heading: formData.title,
+          body: quillBody,
+        }));
+        localCache[id] = {
+          ...selectedBlog,
+          heading: formData.title,
+          body: quillBody,
+        };
+
         setSuccessMsg("Blog updated successfully");
         console.log("Updated");
       } else {
@@ -56,11 +69,13 @@ const UpdateBlog = () => {
   };
 
   useEffect(() => {
-    setFormData({
-      title: selectedBlog.heading,
-      content: selectedBlog.body,
-    });
-  }, [selectedBlog]);
+    if (id) {
+      setFormData({
+        title: localCache[id].heading || "",
+      });
+      setQuillBody(localCache[id].body || "");
+    }
+  }, []);
 
   // Reset messages when the component unmounts or when errorMsg/successMsg change
   useMessageHandling({ setErrorMsg, setSuccessMsg });
@@ -90,7 +105,7 @@ const UpdateBlog = () => {
                 theme="snow"
                 onChange={(value) => setQuillBody(value)}
                 id="content"
-                defaultValue={selectedBlog.body}
+                value={quillBody}
                 formats={formats}
                 placeholder="Enter the content..."
               />
