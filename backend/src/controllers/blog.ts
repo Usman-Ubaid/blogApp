@@ -1,4 +1,7 @@
 import { Request, Response } from "express";
+import { ref, getDownloadURL, uploadBytesResumable } from "firebase/storage";
+import { storage } from "../config/firebaseConfig";
+
 import {
   dbBlogs,
   dbBlogById,
@@ -92,11 +95,42 @@ const blogController = {
       return res.status(500).json({ error: "Internal server error" });
     }
   },
-  uploadImage: (req: Request, res: Response) => {
+  uploadImage: async (req: Request, res: Response) => {
     const file = req.file;
 
-    if (file) {
-      return res.json({ message: "image uploaded", file });
+    const dateTime = Date.now();
+
+    try {
+      if (file) {
+        const storageRef = ref(
+          storage,
+          `images/${req.file?.originalname} + "  " + ${dateTime}`
+        );
+
+        const metaData = {
+          contentType: req.file?.mimetype,
+        };
+
+        if (req.file && req.file.buffer) {
+          const snapshot = await uploadBytesResumable(
+            storageRef,
+            req.file.buffer,
+            metaData
+          );
+          const downloadURl = await getDownloadURL(snapshot.ref);
+          return res.status(200).json({
+            message: "Image uploaded",
+            file: {
+              name: req.file?.originalname,
+              type: req.file?.mimetype,
+              imageUrl: downloadURl,
+            },
+          });
+        }
+      }
+    } catch (error) {
+      console.log(error);
+      return res.status(500).json({ err: "Server error" });
     }
   },
 };
