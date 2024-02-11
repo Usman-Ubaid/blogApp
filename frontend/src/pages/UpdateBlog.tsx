@@ -4,7 +4,6 @@ import { useState } from "react";
 import axios from "axios";
 import Layout from "../components/common/Layout";
 import useMessageHandling from "../hooks/useMessageHandling";
-import { updateBlogApi } from "../services/api/blogApi";
 import { handlePostBlogApiError } from "../utils/handleAxiosErrors";
 import { useMessage } from "../hooks/MessageContext";
 import { useFormHook } from "../hooks/useFormHook";
@@ -25,7 +24,7 @@ const UpdateBlog = () => {
     title: "",
   });
   const { errorMsg, setErrorMsg, successMsg, setSuccessMsg } = useMessage();
-  const { setBlogData } = useBlogDataContext();
+  const { updateBlog } = useBlogDataContext();
 
   const handleBodyText = (content) => {
     setQuillBody(content);
@@ -35,16 +34,7 @@ const UpdateBlog = () => {
     e.preventDefault();
     try {
       if (id) {
-        await updateBlogApi(formData.title, quillBody, id);
-
-        setBlogData((prevData) => {
-          const updatedData = prevData.map((blog) =>
-            String(blog.id) === id
-              ? { ...blog, heading: formData.title, body: quillBody }
-              : blog
-          );
-          return updatedData;
-        });
+        updateBlog(formData.title, quillBody, id);
 
         setSelectedBlog((prevValue) => ({
           ...prevValue,

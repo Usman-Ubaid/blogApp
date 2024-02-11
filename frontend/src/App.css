@@ -272,13 +272,17 @@ textarea {
 .blog-form-wrapper form input {
   border-radius: 5px;
   border: 1px solid #ccc;
-  padding: 5px 8px;
+  padding: 8px 8px;
   font-size: 20px;
 }
 
 .blog-form-wrapper .content-textarea .text-editor {
   height: 250px;
   margin-bottom: 30px;
+}
+
+.ql-editor {
+  font-size: 20px;
 }
 
 .blog-card-wrapper .blog-card {
@@ -350,6 +354,14 @@ textarea {
   font-size: 18px;
 }
 
+.blog-details .blog-content img {
+  display: block;
+  margin: 20px auto;
+  border-radius: 5px;
+  width: 600px;
+  height: 400px;
+}
+
 /* Delete pop up styles */
 
 .delete-portal-overlay {
@@ -395,4 +407,9 @@ textarea {
 
 .delete-portal .portal-btn:hover {
   background-color: rgb(0, 99, 221);
+}
+
+.editor-img {
+  height: 300px;
+  width: 300px;
 }

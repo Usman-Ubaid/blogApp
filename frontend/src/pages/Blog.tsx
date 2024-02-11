@@ -2,7 +2,6 @@ import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { useState } from "react";
 import Layout from "../components/common/Layout";
-import { deleteBlogApi } from "../services/api/blogApi";
 import { formatDate } from "../utils/formatDate";
 import DeleteBlogPortal from "../components/common/DeletePopup";
 import { useBlogDataContext } from "../hooks/BlogDataContext";
@@ -12,7 +11,7 @@ const Blog = () => {
   const [isOpen, setIsOpen] = useState(false);
   const { id } = useParams();
   const navigate = useNavigate();
-  const { setBlogData } = useBlogDataContext();
+  const { deleteBlog } = useBlogDataContext();
   const { selectedBlog } = useIndividualBlog(id as string);
   const { heading, body, created_at } = selectedBlog;
 
@@ -25,12 +24,7 @@ const Blog = () => {
   const handleDeletePost = async () => {
     try {
       if (id) {
-        await deleteBlogApi(id);
-
-        setBlogData((prevValue) => {
-          const filterData = prevValue.filter((blog) => blog.id !== Number(id));
-          return filterData;
-        });
+        deleteBlog(id);
 
         console.log("Blog deleted");
         navigate("/blogs");

@@ -5,7 +5,6 @@ import Layout from "../components/common/Layout";
 import Input from "../components/form/Input";
 import { useMessage } from "../hooks/MessageContext";
 import { useFormHook } from "../hooks/useFormHook";
-import { postBlogApi } from "../services/api/blogApi";
 import { handlePostBlogApiError } from "../utils/handleAxiosErrors";
 import useMessageHandling from "../hooks/useMessageHandling";
 import { BlogData } from "../types/blog";
@@ -18,19 +17,15 @@ const WriteBlog = () => {
     title: "",
   });
   const { errorMsg, setErrorMsg, successMsg, setSuccessMsg } = useMessage();
-  const { setBlogData } = useBlogDataContext();
+  const { addBlog } = useBlogDataContext();
 
-  const handleBodyText = (content) => {
-    setValue(content);
-  };
+  const handleBodyText = (content: string) => setValue(content);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      const res = await postBlogApi(formData.title, value);
-      setBlogData((prevValue) => [...prevValue, res.data.blog]);
+      addBlog(formData.title, value);
       setSuccessMsg("Blog posted successfully");
-      console.log(res.statusText);
     } catch (error) {
       if (axios.isAxiosError(error) && error.response) {
         const err = handlePostBlogApiError(error.response.status);

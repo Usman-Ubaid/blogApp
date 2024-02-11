@@ -1,33 +1,22 @@
 import "react-quill/dist/quill.snow.css";
 import ReactQuill from "react-quill";
 import { useCallback, useMemo, useRef } from "react";
+import { uploadImageToServerApi } from "../../services/api/uploadImage";
 
 type EditorProps = {
   value: string;
-  onChange: (content) => void;
+  onChange: (content: string) => void;
 };
 
 const Editor = ({ value, onChange }: EditorProps) => {
-  const quill = useRef<ReactQuill | null>(null);
+  const quillRef = useRef<ReactQuill | null>(null);
 
   const uploadImageToServer = async (file: File) => {
     const formData = new FormData();
     formData.append("image", file);
 
-    return await fetch(" http://localhost:3001/api/blog/upload", {
-      method: "POST",
-      body: formData,
-    })
-      .then((response) => {
-        return response.json();
-      })
-      .then((data) => {
-        console.log("Image uploaded successfully:");
-        return data;
-      })
-      .catch((error) => {
-        console.error("Error uploading image:", error);
-      });
+    const response = await uploadImageToServerApi(formData);
+    return response;
   };
 
   const imageHandler = useCallback(() => {
@@ -40,13 +29,13 @@ const Editor = ({ value, onChange }: EditorProps) => {
       const file = input.files && input.files[0];
       if (file) {
         try {
-          const imageUrl = await uploadImageToServer(file);
-          const baseUrl = "http://localhost:3001";
-          const imgUrl = baseUrl + "/images/" + imageUrl.file.filename;
-          onChange(
-            (prevValue) =>
-              prevValue + `<img  src="${imgUrl}" alt="Uploaded Image">`
-          );
+          const results = await uploadImageToServer(file);
+          const range = quillRef.current?.getEditor().getSelection();
+          if (range) {
+            quillRef.current
+              ?.getEditor()
+              .insertEmbed(range?.index, "image", results.file.imageUrl);
+          }
         } catch (error) {
           console.error("Error handling image:", error);
         }
@@ -100,7 +89,7 @@ const Editor = ({ value, onChange }: EditorProps) => {
   return (
     <ReactQuill
       className="text-editor"
-      ref={(el) => (quill.current = el)}
+      ref={(el) => (quillRef.current = el)}
       theme="snow"
       value={value}
       formats={formats}
