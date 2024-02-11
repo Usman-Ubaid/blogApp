@@ -5,10 +5,9 @@ import { useCallback, useMemo, useRef } from "react";
 type EditorProps = {
   value: string;
   onChange: (content) => void;
-  handleImage: (content) => void;
 };
 
-const Editor = ({ value, onChange, handleImage }: EditorProps) => {
+const Editor = ({ value, onChange }: EditorProps) => {
   const quill = useRef<ReactQuill | null>(null);
 
   const uploadImageToServer = async (file: File) => {
@@ -24,7 +23,6 @@ const Editor = ({ value, onChange, handleImage }: EditorProps) => {
       })
       .then((data) => {
         console.log("Image uploaded successfully:");
-        handleImage(data.file);
         return data;
       })
       .catch((error) => {

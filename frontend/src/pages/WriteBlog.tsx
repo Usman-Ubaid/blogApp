@@ -1,5 +1,4 @@
 import axios from "axios";
-import ReactQuill from "react-quill";
 import { useState } from "react";
 import "react-quill/dist/quill.snow.css";
 import Layout from "../components/common/Layout";
@@ -10,21 +9,25 @@ import { postBlogApi } from "../services/api/blogApi";
 import { handlePostBlogApiError } from "../utils/handleAxiosErrors";
 import useMessageHandling from "../hooks/useMessageHandling";
 import { BlogData } from "../types/blog";
-import { formats, modules } from "../constants/reactQuill/quillEditorConfig";
 import { useBlogDataContext } from "../hooks/BlogDataContext";
+import Editor from "../constants/reactQuill/Editor";
 
 const WriteBlog = () => {
-  const [quillBody, setQuillBody] = useState("");
+  const [value, setValue] = useState("");
   const { formData, handleInputChange } = useFormHook<BlogData>({
     title: "",
   });
   const { errorMsg, setErrorMsg, successMsg, setSuccessMsg } = useMessage();
   const { setBlogData } = useBlogDataContext();
 
+  const handleBodyText = (content) => {
+    setValue(content);
+  };
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      const res = await postBlogApi(formData.title, quillBody);
+      const res = await postBlogApi(formData.title, value);
       setBlogData((prevValue) => [...prevValue, res.data.blog]);
       setSuccessMsg("Blog posted successfully");
       console.log(res.statusText);
@@ -58,16 +61,7 @@ const WriteBlog = () => {
             </div>
             <div className="content-textarea">
               <label>Content*</label>
-              <ReactQuill
-                className="text-editor"
-                modules={modules}
-                theme="snow"
-                onChange={(value) => setQuillBody(value)}
-                id="content"
-                value={quillBody}
-                formats={formats}
-                placeholder="Enter the content..."
-              />
+              <Editor value={value} onChange={handleBodyText} />
             </div>
             <button type="submit" className="btn">
               Publish
