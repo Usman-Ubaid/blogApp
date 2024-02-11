@@ -3,14 +3,19 @@ import "dotenv/config";
 import cors from "cors";
 import { db } from "./config/db";
 import router from "./routes";
+import bodyParser from "body-parser";
+import path from "path";
 
 const app = express();
 
 const port = process.env.PORT;
 
-app.use(express.urlencoded({ extended: true }));
-app.use(express.json());
+app.use(express.json({ limit: "50mb" }));
+app.use(express.urlencoded({ extended: true, limit: "50mb" }));
 app.use(cors());
+app.use(express.static(path.join(__dirname, "public")));
+app.use(bodyParser.json({ limit: "50mb" }));
+app.use(bodyParser.urlencoded({ limit: "50mb", extended: true }));
 
 db.connect((error) => {
   if (error) {

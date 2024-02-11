@@ -92,6 +92,13 @@ const blogController = {
       return res.status(500).json({ error: "Internal server error" });
     }
   },
+  uploadImage: (req: Request, res: Response) => {
+    const file = req.file;
+
+    if (file) {
+      return res.json({ message: "image uploaded", file });
+    }
+  },
 };
 
 export default blogController;
