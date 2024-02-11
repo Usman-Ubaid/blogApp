@@ -1,7 +1,7 @@
 import { Router } from "express";
 import blogController from "../controllers/blog";
 import { protect } from "../middleware/auth";
-import { upload } from "../utils/multerConfig";
+import { upload } from "../config/multerConfig";
 
 const router = Router();
 
