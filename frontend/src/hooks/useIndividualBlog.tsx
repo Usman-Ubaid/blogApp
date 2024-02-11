@@ -31,5 +31,21 @@ export const useIndividualBlog = (id: string) => {
     }
   }, [id, selectedBlog.heading, selectedBlog.body]);
 
-  return { selectedBlog, localCache, setSelectedBlog };
+  const updatSelectedBlog = (title: string, body: string) => {
+    setSelectedBlog((prevValue) => ({
+      ...prevValue,
+      heading: title,
+      body: body,
+    }));
+  };
+
+  const updateLocalCache = (id: string, title: string, body: string) => {
+    localCache[id] = {
+      ...selectedBlog,
+      heading: title,
+      body: body,
+    };
+  };
+
+  return { selectedBlog, localCache, setSelectedBlog, updatSelectedBlog, updateLocalCache };
 };

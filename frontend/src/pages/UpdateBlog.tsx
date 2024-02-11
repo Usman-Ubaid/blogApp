@@ -1,6 +1,5 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { useState } from "react";
 import axios from "axios";
 import Layout from "../components/common/Layout";
 import useMessageHandling from "../hooks/useMessageHandling";
@@ -15,9 +14,8 @@ import Editor from "../components/quillEditor/Editor";
 
 const UpdateBlog = () => {
   const { id } = useParams();
-  const { localCache, selectedBlog, setSelectedBlog } = useIndividualBlog(
-    id as string
-  );
+  const { localCache, selectedBlog, updateLocalCache, updatSelectedBlog } =
+    useIndividualBlog(id as string);
   const [quillBody, setQuillBody] = useState(selectedBlog?.body || "");
 
   const { formData, setFormData, handleInputChange } = useFormHook<BlogData>({
@@ -26,7 +24,7 @@ const UpdateBlog = () => {
   const { errorMsg, setErrorMsg, successMsg, setSuccessMsg } = useMessage();
   const { updateBlog } = useBlogDataContext();
 
-  const handleBodyText = (content) => {
+  const handleBodyText = (content: string) => {
     setQuillBody(content);
   };
 
@@ -36,16 +34,9 @@ const UpdateBlog = () => {
       if (id) {
         updateBlog(formData.title, quillBody, id);
 
-        setSelectedBlog((prevValue) => ({
-          ...prevValue,
-          heading: formData.title,
-          body: quillBody,
-        }));
-        localCache[id] = {
-          ...selectedBlog,
-          heading: formData.title,
-          body: quillBody,
-        };
+        updatSelectedBlog(formData.title, quillBody);
+
+        updateLocalCache(id, formData.title, quillBody);
 
         setSuccessMsg("Blog updated successfully");
         console.log("Updated");
