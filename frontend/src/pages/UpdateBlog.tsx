@@ -1,7 +1,5 @@
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
-import ReactQuill from "react-quill";
-import "react-quill/dist/quill.snow.css";
 import { useState } from "react";
 import axios from "axios";
 import Layout from "../components/common/Layout";
@@ -12,9 +10,9 @@ import { useMessage } from "../hooks/MessageContext";
 import { useFormHook } from "../hooks/useFormHook";
 import Input from "../components/form/Input";
 import { BlogData } from "../types/blog";
-import { formats, modules } from "../constants/reactQuill/quillEditorConfig";
 import { useBlogDataContext } from "../hooks/BlogDataContext";
 import { useIndividualBlog } from "../hooks/useIndividualBlog";
+import Editor from "../components/quillEditor/Editor";
 
 const UpdateBlog = () => {
   const { id } = useParams();
@@ -28,6 +26,10 @@ const UpdateBlog = () => {
   });
   const { errorMsg, setErrorMsg, successMsg, setSuccessMsg } = useMessage();
   const { setBlogData } = useBlogDataContext();
+
+  const handleBodyText = (content) => {
+    setQuillBody(content);
+  };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -99,16 +101,7 @@ const UpdateBlog = () => {
             </div>
             <div className="content-textarea">
               <label>Content*</label>
-              <ReactQuill
-                className="text-editor"
-                modules={modules}
-                theme="snow"
-                onChange={(value) => setQuillBody(value)}
-                id="content"
-                value={quillBody}
-                formats={formats}
-                placeholder="Enter the content..."
-              />
+              <Editor value={quillBody} onChange={handleBodyText} />
             </div>
             <button type="submit" className="btn">
               Update

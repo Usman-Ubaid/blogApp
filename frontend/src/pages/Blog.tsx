@@ -4,7 +4,7 @@ import { useState } from "react";
 import Layout from "../components/common/Layout";
 import { deleteBlogApi } from "../services/api/blogApi";
 import { formatDate } from "../utils/formatDate";
-import DeleteBlogPortal from "../components/DeletePopup";
+import DeleteBlogPortal from "../components/common/DeletePopup";
 import { useBlogDataContext } from "../hooks/BlogDataContext";
 import { useIndividualBlog } from "../hooks/useIndividualBlog";
 

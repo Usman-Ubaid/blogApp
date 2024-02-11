@@ -10,7 +10,7 @@ import { handlePostBlogApiError } from "../utils/handleAxiosErrors";
 import useMessageHandling from "../hooks/useMessageHandling";
 import { BlogData } from "../types/blog";
 import { useBlogDataContext } from "../hooks/BlogDataContext";
-import Editor from "../constants/reactQuill/Editor";
+import Editor from "../components/quillEditor/Editor";
 
 const WriteBlog = () => {
   const [value, setValue] = useState("");
