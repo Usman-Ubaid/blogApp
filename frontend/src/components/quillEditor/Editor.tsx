@@ -43,6 +43,15 @@ const Editor = ({ value, onChange }: EditorProps) => {
     };
   }, []);
 
+  // const deleteImageHandler = useCallback(() => {
+  //   const selection = quillRef.current?.getEditor().getSelection();
+  //   if (selection) {
+  //     const index = selection.index;
+  //     const length = selection.length;
+  //     quillRef.current?.getEditor().deleteText(index, length);
+  //   }
+  // }, []);
+
   const modules = useMemo(
     () => ({
       toolbar: {
@@ -61,6 +70,7 @@ const Editor = ({ value, onChange }: EditorProps) => {
         ],
         handlers: {
           image: imageHandler,
+          // deleteImage: deleteImageHandler,
         },
       },
       clipboard: {

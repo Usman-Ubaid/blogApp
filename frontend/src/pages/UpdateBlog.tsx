@@ -52,13 +52,13 @@ const UpdateBlog = () => {
   };
 
   useEffect(() => {
-    if (id) {
+    if (id && selectedBlog.heading && selectedBlog.body) {
       setFormData({
-        title: localCache[id].heading || "",
+        title: localCache[id]?.heading || selectedBlog?.heading || "",
       });
-      setQuillBody(localCache[id].body || "");
+      setQuillBody(localCache[id]?.body || selectedBlog?.body);
     }
-  }, []);
+  }, [id, selectedBlog]);
 
   // Reset messages when the component unmounts or when errorMsg/successMsg change
   useMessageHandling({ setErrorMsg, setSuccessMsg });
@@ -77,7 +77,7 @@ const UpdateBlog = () => {
                 name="title"
                 id="title"
                 onChange={handleInputChange}
-                value={formData.title}
+                value={formData && formData?.title}
               />
             </div>
             <div className="content-textarea">

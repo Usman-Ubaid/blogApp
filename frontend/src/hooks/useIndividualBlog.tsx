@@ -18,18 +18,14 @@ export const useIndividualBlog = (id: string) => {
     }
     async function fetchIndividualBlog() {
       try {
-        if (localCache[id]) {
-          setSelectedBlog(localCache[id]);
-        } else {
-          const res = await axiosPrivate.get(`/blog/${id}`);
-          setSelectedBlog(res.data?.blog[0]);
-          localCache[id] = res.data.blog[0];
-        }
+        const res = await axiosPrivate.get(`/blog/${id}`);
+        setSelectedBlog(res.data?.blog[0]);
+        localCache[id] = res.data?.blog[0];
       } catch (error) {
         console.log(error);
       }
     }
-  }, [id, selectedBlog.heading, selectedBlog.body]);
+  }, [id, localCache[id]]);
 
   const updatSelectedBlog = (title: string, body: string) => {
     setSelectedBlog((prevValue) => ({
@@ -41,11 +37,17 @@ export const useIndividualBlog = (id: string) => {
 
   const updateLocalCache = (id: string, title: string, body: string) => {
     localCache[id] = {
-      ...selectedBlog,
+      ...localCache[id],
       heading: title,
       body: body,
     };
   };
 
-  return { selectedBlog, localCache, setSelectedBlog, updatSelectedBlog, updateLocalCache };
+  return {
+    selectedBlog,
+    localCache,
+    setSelectedBlog,
+    updatSelectedBlog,
+    updateLocalCache,
+  };
 };
