@@ -12,7 +12,9 @@ const BlogsList = () => {
         <div className="blogs-content">
           {blogData && <BlogCard data={blogData} />}
         </div>
-        <div>{!blogData && <h2>No Blogs Found</h2>}</div>
+        <div>
+          {(!blogData || blogData.length === 0) && <h2>No Blogs Found</h2>}
+        </div>
       </div>
     </Layout>
   );
