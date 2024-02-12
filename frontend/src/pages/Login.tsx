@@ -9,6 +9,7 @@ import { useMessage } from "../hooks/MessageContext";
 import { saveAuthToken } from "../utils/tokenStorage";
 import useMessageHandling from "../hooks/useMessageHandling";
 import Navbar from "../components/common/Navbar";
+import { useAuth } from "../hooks/AuthContext";
 
 const Login = () => {
   const { formData, handleInputChange } = useFormHook<LoginFormData>({
@@ -17,17 +18,14 @@ const Login = () => {
   });
   const navigate = useNavigate();
   const { errorMsg, setErrorMsg, successMsg, setSuccessMsg } = useMessage();
+  const { loginUser } = useAuth();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      return await loginApi(formData).then((res) => {
-        const token = res.data?.data?.token;
-        saveAuthToken(token);
-        setSuccessMsg("Successfully logged in");
-
-        navigate("/");
-      });
+      await loginUser(formData);
+      setSuccessMsg("Successfully logged in");
+      navigate("/");
     } catch (error) {
       if (axios.isAxiosError(error) && error.response) {
         const err = handleLoginError(error.response?.status);
