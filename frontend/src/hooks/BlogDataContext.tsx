@@ -8,6 +8,7 @@ import {
   postBlogApi,
   updateBlogApi,
 } from "../services/api/blogApi";
+import { useAuth } from "./AuthContext";
 
 type BlogContextType = {
   blogData: BlogType[];
@@ -36,7 +37,7 @@ export const BlogDataProvider = ({
   children: React.ReactNode;
 }) => {
   const [blogData, setBlogData] = useState<BlogType[]>([]);
-
+  const { currentUser } = useAuth();
   const fetchBlogs = async () => {
     try {
       const results = await axiosPrivate.get("/blog");
@@ -50,8 +51,10 @@ export const BlogDataProvider = ({
   };
 
   useEffect(() => {
-    fetchBlogs();
-  }, []);
+    if (currentUser) {
+      fetchBlogs();
+    }
+  }, [currentUser]);
 
   const addBlog = async (title: string, value: string) => {
     const res = await postBlogApi(title, value);
