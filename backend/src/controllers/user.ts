@@ -66,7 +66,7 @@ const userController = {
           const token = generateJWT(payload);
           return res.status(200).json({
             message: "Success",
-            data: { id: user[0].id, email, token },
+            data: { id: user[0].id, username: user[0].username, email, token },
           });
         }
       } else {
